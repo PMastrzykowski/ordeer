@@ -34,8 +34,9 @@ import PaymentButton from "./feature-partials/PaymentButton";
 import { PaymentRequestButtonElement } from "react-stripe-elements";
 import ApplePay from "./feature-partials/ApplePay";
 import Div100vh from "react-div-100vh";
-import * as currency from "currency.js"
-import {currencyOptions} from "../../../../helpers/regional";
+import * as currency from "currency.js";
+import { currencyOptions } from "../../../../helpers/regional";
+import { CSSTransition } from "react-transition-group";
 
 const stripe = loadStripe("pk_test_qHxTXKGEwmRKjMlcVaniPj1100yRvKKPZY");
 class FreshFeature extends React.Component {
@@ -175,7 +176,13 @@ class FreshFeature extends React.Component {
                                                     {item.name}
                                                 </div>
                                                 <div className={`item-price`}>
-                                                {currency(item.price, currencyOptions(this.props.newOrder.currency)).format()}
+                                                    {currency(
+                                                        item.price,
+                                                        currencyOptions(
+                                                            this.props.newOrder
+                                                                .currency
+                                                        )
+                                                    ).format()}
                                                 </div>
                                             </div>
                                         </div>
@@ -244,9 +251,12 @@ class FreshFeature extends React.Component {
                     >
                         <button className={`button`}>
                             Checkout -{" "}
-                            {currency(calculateTotal(this.props.newOrder.cart), currencyOptions(this.props.newOrder.currency)).format()}
+                            {currency(
+                                calculateTotal(this.props.newOrder.cart),
+                                currencyOptions(this.props.newOrder.currency)
+                            ).format()}
                             <div className="cart-count">
-                            {calculateTotalAmount(this.props.newOrder.cart)}
+                                {calculateTotalAmount(this.props.newOrder.cart)}
                             </div>
                         </button>
                     </Link>
@@ -271,10 +281,15 @@ class FreshFeature extends React.Component {
                                 }}
                             >
                                 Add to cart -{" "}
-                            {currency(calculateItemPrice(
-                                    this.props.newOrder.selectedItem,
-                                    this.props.newOrder.selectedItem.amount
-                                ), currencyOptions(this.props.newOrder.currency)).format()}
+                                {currency(
+                                    calculateItemPrice(
+                                        this.props.newOrder.selectedItem,
+                                        this.props.newOrder.selectedItem.amount
+                                    ),
+                                    currencyOptions(
+                                        this.props.newOrder.currency
+                                    )
+                                ).format()}
                                 {}
                             </button>
                         </div>
@@ -365,15 +380,20 @@ class FreshFeature extends React.Component {
                         <div className={`item-total-label`}>Total</div>
                         <div className={`item-total-amount`}>
                             {this.props.newOrder.selectedItem.amount} x{" "}
-                            {currency(calculateItemPrice(
-                                this.props.newOrder.selectedItem
-                            ), currencyOptions(this.props.newOrder.currency)).format()}
-                            {" "}
+                            {currency(
+                                calculateItemPrice(
+                                    this.props.newOrder.selectedItem
+                                ),
+                                currencyOptions(this.props.newOrder.currency)
+                            ).format()}{" "}
                             ={" "}
-                            {currency(calculateItemPrice(
-                                this.props.newOrder.selectedItem,
-                                this.props.newOrder.selectedItem.amount
-                            ), currencyOptions(this.props.newOrder.currency)).format()}
+                            {currency(
+                                calculateItemPrice(
+                                    this.props.newOrder.selectedItem,
+                                    this.props.newOrder.selectedItem.amount
+                                ),
+                                currencyOptions(this.props.newOrder.currency)
+                            ).format()}
                         </div>
                     </div>
                 </div>
@@ -428,7 +448,13 @@ class FreshFeature extends React.Component {
                                         {item.name}
                                     </div>
                                     <div className={"cart-item-price"}>
-                                        {item.amount} x {currency(item.price, currencyOptions(this.props.newOrder.currency)).format()}
+                                        {item.amount} x{" "}
+                                        {currency(
+                                            item.price,
+                                            currencyOptions(
+                                                this.props.newOrder.currency
+                                            )
+                                        ).format()}
                                     </div>
                                 </div>
                                 <div className={"cart-item-special-fields"}>
@@ -540,7 +566,10 @@ class FreshFeature extends React.Component {
                     <div className={`checkout-receipt-summary`}>
                         <div className={`label`}>Total</div>
                         <div className={`total`}>
-                            {currency(calculateTotal(this.props.newOrder.cart), currencyOptions(this.props.newOrder.currency)).format()}
+                            {currency(
+                                calculateTotal(this.props.newOrder.cart),
+                                currencyOptions(this.props.newOrder.currency)
+                            ).format()}
                         </div>
                     </div>
                 </div>
@@ -559,7 +588,10 @@ class FreshFeature extends React.Component {
                     <div>
                         <div className={`label`}>Total</div>
                         <div className={`total`}>
-                            {currency(calculateTotal(this.props.newOrder.cart), currencyOptions(this.props.newOrder.currency)).format()}
+                            {currency(
+                                calculateTotal(this.props.newOrder.cart),
+                                currencyOptions(this.props.newOrder.currency)
+                            ).format()}
                         </div>
                     </div>
                     <div>
@@ -578,6 +610,25 @@ class FreshFeature extends React.Component {
                         </Link>
                     </div>
                 </div>
+                <div className={"payment-modal"}>
+                    <div className={"payment-modal-inner"}>
+                        <div className={"payment-modal-background"}></div>
+                        <div className={"payment-modal-body"}>
+                            <div className={"total-label"}>Total</div>
+                            <div className={"total-amount"}>
+                                {currency(
+                                    calculateTotal(this.props.newOrder.cart),
+                                    currencyOptions(
+                                        this.props.newOrder.currency
+                                    )
+                                ).format()}
+                            </div>
+                            <Elements stripe={stripe}>
+                                <ApplePay />
+                            </Elements>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     };
@@ -588,11 +639,14 @@ class FreshFeature extends React.Component {
                     className={`amount`}
                     ref={(div) => (this.view2amount = div)}
                 >
-                {currency(calculateTotal(this.props.newOrder.cart), currencyOptions(this.props.newOrder.currency)).format()}
+                    {currency(
+                        calculateTotal(this.props.newOrder.cart),
+                        currencyOptions(this.props.newOrder.currency)
+                    ).format()}
                 </div>
                 <div className={`payment-buttons`}>
                     <Elements stripe={stripe}>
-                    <ApplePay/>
+                        <ApplePay />
                     </Elements>
                     {/* <div
                         className={`payment-button apple`}

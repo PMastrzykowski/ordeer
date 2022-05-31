@@ -77,7 +77,7 @@ const ApplePay = () => {
 
   return (
     <>
-      {paymentRequest && <PaymentRequestButtonElement options={{paymentRequest}} />}
+      {paymentRequest? <PaymentRequestButtonElement options={{paymentRequest, style: {theme: 'dark', height: '64px'}}} />:<button className={'order-now'}>Order now</button>}
 
       <StatusMessages messages={messages} />
     </>
