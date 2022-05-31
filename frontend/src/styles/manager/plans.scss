@@ -1,0 +1,347 @@
+#plans {
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    .pay {
+        margin-top: 20px;
+        padding: 20px;
+        color: $color-1;
+        background: $color-7 !important;
+        border-radius: 5px;
+        width: 100px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        &.cancel{
+            margin-left: 20px;
+            background: $color-10 !important;
+            color: $color-5;
+        }
+    }
+    .billing {
+        .tabs {
+            .tab-header {
+                width: 100%;
+                @include flexbox();
+                @include justify-content(space-between);
+                @include align-items(center);
+                cursor: pointer;
+                padding: 20px 0;
+                .tab-header-left {
+                }
+                .tab-header-right {
+                    border-color: $color-7;
+                    border-style: solid;
+                    border-width: 0 3px 3px 0;
+                    width: 10px;
+                    height: 10px;
+                    transition: all .5s;
+                    transform: rotate(-45deg);
+                    &.open{
+                        transform: rotate(45deg);
+                    }
+                }
+            }
+            .tab{
+                box-shadow: none;
+                margin: 20px 0;
+                transition: all .5s;
+                max-height: 0;
+                overflow: hidden;
+                border-width: 0 0 1px 0;
+                border-style: solid;
+                border-color: $color-2;
+                &.open{
+                    box-shadow: $shadow-7;
+                    max-height: 1000px;
+                }
+            }
+        }
+        #add-payment-method {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: $color-1;
+            border-radius: 10px;
+            .card-form {
+                width: 100%;
+                max-width: 400px;
+                margin-top: 20px;
+            }
+            .tax-switch {
+                @include flexbox();
+                @include align-items(center);
+                margin: 30px 0;
+            }
+        }
+    }
+    #available-plans {
+        .interval-wrapper {
+            padding: 50px 0;
+            @include flexbox();
+            @include justify-content(center);
+            @include align-items(center);
+            .interval-switch {
+                padding-left: 20px;
+                margin: 0 20px;
+            }
+            .interval-value {
+                position: relative;
+                .line {
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    width: 0%;
+                    height: 1px;
+                    border-width: 0 0 1px 0;
+                    border-style: solid;
+                    border-color: $color-7;
+                    transition: all 0.6s;
+                    &.long {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        .plan {
+            margin-top: 50px;
+            border: 1px solid $color-10;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 10px;
+            position: relative;
+            background: $color-1;
+            .plan-header {
+                width: 100%;
+                border-width: 0 0 1px 0;
+                border-style: solid;
+                border-color: $color-10;
+                padding: 20px;
+                @include flexbox();
+                @include justify-content(space-between);
+                @include align-items(center);
+                box-sizing: border-box;
+                .plan-name {
+                    font-size: 40px;
+                    color: $color-7;
+                }
+                .plan-price {
+                    font-size: 20px;
+                    color: $color-5;
+                    @include flexbox();
+                    @include align-items(center);
+                    .plan-price-value {
+                        margin-right: 15px;
+                        font-size: 30px;
+                    }
+                    .plan-price-descriptors {
+                        text-transform: uppercase;
+                        font-size: 13px;
+                        .plan-price-descriptors-currency {
+                        }
+                        .plan-price-descriptors-interval {
+                        }
+                    }
+                }
+            }
+            .plan-body {
+                padding: 20px;
+            }
+            .plan-footer {
+                width: 100%;
+                border-width: 1px 0 0 0;
+                border-style: solid;
+                border-color: $color-10;
+                padding: 20px;
+                @include flexbox();
+                @include justify-content(flex-end);
+                @include align-items(center);
+                box-sizing: border-box;
+                .switch-to {
+                    padding: 20px;
+                    color: $color-1;
+                    background: $color-7;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    letter-spacing: 1px;
+                    border: none;
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+#switch-to-plan {
+    width: 100%;
+    max-width: 900px;
+    @include flexbox();
+    .content-left {
+        width: 700px;
+        padding-right: 20px;
+        box-sizing: border-box;
+        .plan-title {
+            font-size: 50px;
+            margin-bottom: 30px;
+        }
+    }
+    .content-right {
+        width: 400px;
+        .payment-method {
+            .add-payment-method {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+        .summary {
+            .summary-settings {
+                @include flexbox();
+                .summary-setting {
+                    width: 100px;
+                    margin-right: 20px;
+                }
+            }
+            .summary-receipt {
+                .summary-receipt-items {
+                    text-align: right;
+                    color: $color-5;
+                    border-width: 0 0 1px 0;
+                    border-style: solid;
+                    border-color: $color-10;
+                    padding-bottom: 10px;
+                    margin-bottom: 10px;
+                    margin-top: 50px;
+                }
+                .summary-receipt-discount {
+                    @include flexbox();
+                    @include justify-content(flex-end);
+                    @include align-items(center);
+                    margin-bottom: 10px;
+                    .summary-receipt-discount-label {
+                        color: $color-1;
+                        font-size: 12px;
+                        background-color: $color-11;
+                        padding: 3px 20px 3px 5px;
+                        margin: 0 10px 0 0;
+                        -webkit-clip-path: polygon(
+                            0 0,
+                            calc(100% - 10px) 0,
+                            100% 0,
+                            calc(100% - 10px) 100%,
+                            0 100%
+                        );
+                        clip-path: polygon(
+                            0 0,
+                            calc(100% - 10px) 0,
+                            100% 50%,
+                            calc(100% - 10px) 100%,
+                            0 100%
+                        );
+                    }
+                    .summary-receipt-discount-amount {
+                        color: $color-5;
+                        text-decoration: line-through;
+                    }
+                }
+                .summary-receipt-total {
+                    @include flexbox();
+                    @include justify-content(space-between);
+                    @include align-items(center);
+                    text-align: right;
+                    color: $color-7;
+                    font-size: 25px;
+                    .summary-receipt-total-label {
+                    }
+                    .summary-receipt-total-amount {
+                    }
+                }
+                .summary-receipt-billing {
+                    text-align: right;
+                    color: $color-7;
+                    font-size: 12px;
+                }
+            }
+        }
+        .confirm-wrapper {
+            @include flexbox();
+            @include flex-direction(column);
+            @include align-items(center);
+            .confirm {
+                width: 100%;
+                color: $color-1;
+                background-color: $color-7;
+                border-radius: 5px;
+                padding: 20px;
+                font-size: 15px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin: 20px 0;
+            }
+            .or {
+                color: $color-5;
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+            .cancel {
+                color: $color-5;
+                font-size: 12px;
+                text-decoration: underline;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+#payment-method {
+    padding: 20px;
+    .card {
+        width: 100%;
+        margin: 30px 0;
+        border-width: 1px 0;
+        border-style: solid;
+        border-color: $color-10;
+        padding: 20px 0;
+        @include flexbox();
+        @include justify-content(space-between);
+        .card-data {
+            margin-right: 30px;
+            .card-data-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                color: $color-4;
+                margin-bottom: 10px;
+            }
+            .card-data-content {
+                font-size: 18px;
+                color: $color-5;
+            }
+        }
+        .card-left,
+        .card-right {
+            @include flexbox();
+            button {
+                border-radius: 10px;
+                margin-left: 10px;
+                padding: 10px 30px;
+                color: $color-5;
+                background: $color-10;
+            }
+        }
+    }
+    .remove-text {
+        font-size: 12px;
+        color: $color-5;
+        .remove-card {
+            text-decoration: underline;
+            cursor: pointer;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}

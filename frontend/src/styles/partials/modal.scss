@@ -1,0 +1,288 @@
+.modal-background {
+  @include flexbox();
+  @include justify-content(center);
+  background: $color-2-light;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: none;
+  overflow: scroll;
+  .modal-body {
+    margin: 100px;
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    width: fit-content;
+    height: fit-content;
+    background: $color-1;
+    box-shadow: $shadow-6;
+    border-radius: 5px;
+    position: relative;
+    h1 {
+      color: $color-7;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .modal-inner {
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-items(center);
+      width: 100%;
+      box-sizing: border-box;
+      .modal-header {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 30px;
+        border-bottom: 1px solid $color-4;
+        .title {
+          font-size: 18px;
+        }
+      }
+      .modal-essence {
+        padding: 0 30px;
+        box-sizing: border-box;
+        width: 100%;
+        section {
+          margin: 30px 0;
+        }
+        .with-upload {
+          @include flexbox();
+          width: 100%;
+          .left {
+            section {
+              width: 100%;
+            }
+            width: 80%;
+            padding-right: 30px;
+            .image-row {
+              @include flexbox();
+              @include justify-content(space-between);
+              background-color: $color-3;
+              border-radius: 5px;
+              padding: 10px;
+              border: 1px solid $color-4;
+              width: 100%;
+              margin-bottom: 20px;
+              box-sizing: border-box;
+              &.error {
+                background-color: $color-8;
+              }
+              .image-wrapper {
+                @include flexbox();
+                @include justify-content(center);
+                @include align-items(center);
+                background-color: $color-1;
+                overflow: auto;
+                width: 100px;
+                height: 100px;
+                max-width: 100px;
+                max-height: 100px;
+                min-width: 100px;
+                min-height: 100px;
+                border: 1px solid $color-4;
+                border-radius: 5px;
+                img {
+                  max-width: 100px;
+                  max-height: 100px;
+                }
+              }
+              .info-wrapper {
+                @include flexbox();
+                @include flex-direction(column);
+                @include justify-content(space-between);
+                .buttons-wrapper {
+                  @include flexbox();
+                  @include justify-content(flex-end);
+                  button {
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    height: 40px;
+
+                    &.crop {
+                      background-color: $color-7;
+                      color: $color-1;
+                    }
+
+                    &.remove {
+                    }
+                  }
+                }
+                .error {
+                  text-align: end;
+                  color: $color-8;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .modal-footer {
+        @include flexbox();
+        @include justify-content(flex-end);
+        border-top: 1px solid $color-4;
+        padding: 20px 30px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .info {
+        font-size: 16px;
+        color: $color-5;
+        margin-bottom: 40px;
+        max-width: 400px;
+      }
+    }
+    .close {
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items(center);
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      .icon {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        background-color: $color-7;
+        -webkit-clip-path: polygon(
+          40% 0,
+          60% 0,
+          60% 40%,
+          100% 40%,
+          100% 60%,
+          60% 60%,
+          60% 100%,
+          40% 100%,
+          40% 60%,
+          0 60%,
+          0 40%,
+          40% 40%
+        );
+        clip-path: polygon(
+          40% 0,
+          60% 0,
+          60% 40%,
+          100% 40%,
+          100% 60%,
+          60% 60%,
+          60% 100%,
+          40% 100%,
+          40% 60%,
+          0 60%,
+          0 40%,
+          40% 40%
+        );
+      }
+    }
+    button {
+      outline: none;
+      border-radius: 5px;
+      padding: 15px 30px;
+      margin: 0 0 0 20px;
+      font-size: 14px;
+      cursor: pointer;
+      color: $color-7;
+      border: none;
+      &.negative {
+        background: none;
+      }
+      &.positive {
+        background-color: $color-7;
+        color: $color-1;
+      }
+    }
+    .select-file-wrapper {
+      padding: 50px;
+      input {
+        display: none;
+      }
+      .select-file-instructions {
+        color: $color-5;
+        font-size: 12px;
+        margin-top: 20px;
+        text-align: center;
+      }
+      .select-file-error {
+        font-size: 16px;
+        color: $color-8;
+        margin-top: 10px;
+      }
+      .select-file {
+        margin-top: 20px;
+        outline: none;
+        background-color: $color-7;
+        border-radius: 10px;
+        width: 100%;
+        border: 0;
+        color: $color-1;
+        cursor: pointer;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+    }
+    .crop-wrapper {
+      position: relative;
+      width: calc(100% - 2px);
+      margin-top: 20px;
+      height: 100%;
+      min-width: 900px;
+      min-height: 612px;
+    }
+    .slidecontainer {
+      width: 100%;
+    }
+    input[type="range"] {
+      &.slider {
+        margin: 50px 0;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 3px;
+        background: $color-7;
+        outline: none;
+        -webkit-transition: 0.2s;
+        transition: opacity 0.2s;
+        border-radius: 10px;
+      }
+
+      &.slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 40px;
+        height: 40px;
+        background: $color-7;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      &.slider::-moz-range-thumb {
+        width: 20px;
+        height: 40px;
+        background: $color-7;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+    }
+    .loader-wrapper{
+      z-index: 1;
+      border-radius: 5px;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      background: $color-1;
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items(center);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.3s ease-in;
+    }
+  }
+}

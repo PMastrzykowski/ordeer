@@ -1,0 +1,57 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev-start": "nodemon index.js",
+    "server": "node index.js",
+    "client": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run dev-start\" \"npm run client\"",
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "client-ip": "^1.0.0",
+    "cloudinary": "^1.19.0",
+    "concurrently": "^5.0.2",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "datauri": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "gsap": "^3.5.1",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.25.3",
+    "mongoose": "^5.2.4",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.3.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "querystring": "^0.2.0",
+    "react-awesome-slider": "^4.1.0",
+    "react-qr-svg": "^2.2.2",
+    "react-select": "^3.1.0",
+    "react-stripe-elements": "^6.1.2",
+    "react-waypoint": "^10.1.0",
+    "short-unique-id": "^3.0.3",
+    "shortid": "^2.2.15",
+    "socket.io": "^2.4.1",
+    "stripe": "^8.62.0",
+    "uuid": "^8.0.0",
+    "validator": "^10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}

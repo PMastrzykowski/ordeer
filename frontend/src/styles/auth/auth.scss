@@ -1,0 +1,85 @@
+.auth {
+  height: calc(100vh - 40px);
+  width: calc(100% - 40px);
+  background-color: $color-2;
+  border-radius: 20px;
+  margin: 20px;
+  overflow: scroll;
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
+  .auth-inner {
+    border-radius: 30px;
+    background-color: $color-2;
+    padding: 50px;
+    box-shadow: $shadow-9;
+    width: 300px;
+    .main-logo {
+        width: 100px;
+        height: 30px;
+        background-image: url("../images/logo-text.svg");
+        background-repeat: no-repeat;
+        background-size: 100px 30px;
+    }
+    .title {
+      font-size: 25px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    .description {
+      font-size: 12px;
+      margin-bottom: 30px;
+      margin-top: 15px;
+      &.bigger{
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+    .forgot-password {
+      font-size: 10px;
+      margin-top: 10px;
+    }
+    .recaptcha{
+      margin-top: 20px;
+    }
+    .submit-button {
+      width: 100%;
+      min-height: 45px;
+      box-sizing: border-box;
+      border-radius: 100px;
+      padding: 10px 20px;
+      margin: 50px 0 10px 0;
+      box-shadow: $shadow-2;
+      color: $color-5;
+      font-size: 12px;
+      letter-spacing: 1px;
+      border: 0;
+      background-color: $color-2;
+      text-transform: uppercase;
+    }
+    .dont-have-account {
+      font-size: 10px;
+      color: $color-5;
+      text-align: center;
+    }
+    .link{
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .auth{
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    .auth-inner{
+      padding: 20px;
+    }
+  }
+}

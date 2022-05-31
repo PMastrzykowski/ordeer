@@ -1,0 +1,176 @@
+// #new-order {
+//     .header {
+//         .place-name {
+//             text-align: center;
+//             font-size: 16px;
+//             text-shadow: $shadow-5;
+//         }
+//         .point-name {
+//             text-align: center;
+//             font-size: 12px;
+//             text-shadow: $shadow-5;
+//         }
+//     }
+//     .category-header {
+//         @include flexbox();
+//         @include justify-content(center);
+//         @include align-items(center);
+//         color: $color-4;
+//         text-shadow: $shadow-2;
+//         font-size: 20px;
+//         width: 100%;
+//         z-index: 1;
+//         position: -webkit-sticky;
+//         position: sticky;
+//         top: 0;
+//         left: 0;
+//         height: 70px;
+//         background-color: rgb(236, 243, 251);
+//         background: linear-gradient(138deg, rgba(236, 243, 251, 1) 0%, rgba(223, 231, 245, 1) 100%);
+//         text-align: center;
+//         box-shadow: $shadow-6;
+//     }
+//     .item {
+//         @include flexbox();
+//         @include justify-content(space-between);
+//         height: 100px;
+//         background: $color-2;
+//         border-radius: 10px;
+//         width: 95%;
+//         margin: 10px auto;
+//         box-shadow: $shadow-2;
+//         box-sizing: border-box;
+//         .item-content {
+//             @include flexbox();
+//             @include flex-direction(column);
+//             @include justify-content(space-between);
+//             width: 100%;
+//             margin: 10px;
+//             .item-name {
+//                 color: $color-4;
+//                 font-size: 18px;
+//             }
+//             .item-price {
+//                 color: $color-5;
+//                 font-size: 16px;
+//                 font-weight: 300;
+//             }
+//             .item-volume {
+//                 color: $color-6;
+//             }
+//         }
+//         button {
+//             @include flexbox();
+//             @include justify-content(center);
+//             @include align-items(center);
+//             background: $color-2;
+//             border-radius: 5px;
+//             box-shadow: $shadow-2;
+//             border: 0;
+//             min-width: 50px;
+//             min-height: 50px;
+//             max-width: 50px;
+//             margin: 10px;
+//             outline: none;
+//             font-size: 40px;
+//             color: $color-6;
+//             text-shadow: $shadow-2;
+//             box-sizing: border-box;
+//             position: relative;
+//             .plus,
+//             .minus {
+//                 position: absolute;
+//                 width: 20px;
+//                 height: 20px;
+//                 background: $color-6;
+//                 filter: drop-shadow(0px 10px 5px rgba(0, 0, 0, 0.1));
+//             }
+//             .plus {
+//                 -webkit-clip-path: polygon(
+//                     40% 0,
+//                     60% 0,
+//                     60% 40%,
+//                     100% 40%,
+//                     100% 60%,
+//                     60% 60%,
+//                     60% 100%,
+//                     40% 100%,
+//                     40% 60%,
+//                     0 60%,
+//                     0 40%,
+//                     40% 40%
+//                 );
+//                 clip-path: polygon(
+//                     40% 0,
+//                     60% 0,
+//                     60% 40%,
+//                     100% 40%,
+//                     100% 60%,
+//                     60% 60%,
+//                     60% 100%,
+//                     40% 100%,
+//                     40% 60%,
+//                     0 60%,
+//                     0 40%,
+//                     40% 40%
+//                 );
+//             }
+//             .minus {
+//                 -webkit-clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+//                 clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+//             }
+//         }
+//     }
+//     #summary-button {
+//         @include flexbox();
+//         @include justify-content(center);
+//         @include align-items(center);
+//         width: 180px;
+//         height: 100px;
+//         z-index: 2;
+//         border-radius: 15px;
+//         background: $color-2;
+//         box-shadow: $shadow-4;
+//         position: fixed;
+//         bottom: 40px;
+//         left: 50%;
+//         margin-left: -90px;
+//         .content {
+//             @include flexbox();
+//             width: calc(100% - 2px);
+//             height: calc(100% - 2px);
+//             .bill {
+//                 border-radius: 13px 0 0 13px;
+//                 font-size: 20px;
+//             }
+//             .next {
+//                 border-radius: 0 13px 13px 0;
+//             }
+//             .bill,
+//             .next {
+//                 @include flexbox();
+//                 @include justify-content(center);
+//                 @include align-items(center);
+//                 background: rgb(255, 239, 185);
+//                 background: linear-gradient(138deg, rgba(255, 239, 185, 1) 0%, rgba(255, 196, 0, 1) 100%);
+//                 height: 100%;
+//                 width: 50%;
+//                 color: $color-1;
+//                 text-shadow: $shadow-2;
+//             }
+//         }
+//     }
+//     #new-order-loading {
+//         background: $color-7;
+//         width: 100%;
+//         height: 100%;
+//         @include flexbox();
+//         @include flex-direction(column);
+//         @include align-items(center);
+//         @include justify-content(space-around);
+//         img{
+//             max-width: 200px;
+//             height: 50vh;
+//         }
+//     }
+// }

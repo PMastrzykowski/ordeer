@@ -1,0 +1,33 @@
+.switch-wrapper {
+    cursor: pointer;
+    margin-right: 20px;
+    width: fit-content;
+    &.checked .switch {
+      .switch-button {
+        left: calc(100% - 29px);
+        background-color: $color-7;
+      }
+    }
+    .switch {
+      height: 30px;
+      width: 60px;
+      border-radius: 50px;
+      background: $color-9;
+      position: relative;
+      transition: all 0.1s;
+      .switch-button {
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+        height: 30px;
+        width: 30px;
+        background-color: $color-10;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 50px;
+        transition: all 0.1s;
+      }
+    }
+  }
+  

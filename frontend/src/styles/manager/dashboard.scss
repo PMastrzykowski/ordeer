@@ -1,0 +1,117 @@
+#dashboard {
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    .stripe-init-form{
+        width: 100%;
+        max-width: 500px;
+        margin: 100px auto;
+        section{
+            margin-bottom: 20px;
+        }
+        .stripe-init-button{
+            margin-top: 50px;
+            input{
+                width: 100%;
+                outline: none;
+                box-shadow: none;
+                border:0;
+                padding: 20px;
+                font-size: 20px;
+                color: $color-1;
+                background-color: $color-5;
+                border-radius: 10px;
+            }
+        }
+    }
+    .balance-data{
+        @include flexbox();
+        @include justify-content(space-between);
+        margin-bottom: 80px;
+        .balance-data-left .balance-data-set{
+            margin-right: 40px;
+        }
+        .balance-data-right .balance-data-set{
+            margin-left: 40px;
+        }
+        .balance-data-left, .balance-data-right{
+            @include flexbox();
+            @include justify-content(space-between);
+            .balance-data-set{
+                @include flexbox();
+                @include flex-direction(column);
+                @include justify-content(space-between);
+                &.center{
+                    text-align: center;
+                }
+            }
+            .line-small{
+                font-size: 12px;
+                &.light{
+                    color: $color-5;
+                }
+                &.bottom{
+                    margin-top: 10px;
+                }
+                &.top{
+                    margin-bottom: 10px;
+                }
+                &.link{
+                    color: $color-11;
+                    cursor: pointer;
+                }
+            }
+            .line-medium{
+                font-size: 30px;
+            }
+            .line-big{
+                button{
+                    height: 54px;
+                    padding: 0 30px;
+                    width: 100%;
+                    border-radius: 5px;
+                    background-color: $color-7;
+                    color: $color-1;
+                    font-size: 15px;
+                    &:disabled {
+                        cursor: not-allowed;
+                        opacity: 0.2;
+                      }
+                }
+            }
+        }
+    }
+    .recent-orders{
+        @include flexbox();
+        @include align-items(center);
+        @include justify-content(center);
+        border-radius: 5px;
+        background-color: $color-9;
+        width: 100%;
+        height: 250px;
+    }
+    .info-box{
+        margin-bottom: 60px;
+        button{
+            padding: 20px 60px;
+            font-size: 15px;
+            color: $color-16;
+        }
+    }
+    .currency{
+        text-transform: uppercase;
+    }
+}
+#token-loader{
+    width: 100vw;
+    height: 100vh;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+    .cssload-speeding-wheel {
+        border: 4px solid $color-7;
+        border-left-color: transparent;
+        border-right-color: transparent;
+
+    }
+}

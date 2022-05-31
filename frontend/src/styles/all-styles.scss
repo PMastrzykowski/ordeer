@@ -1,0 +1,36 @@
+// @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./app.scss";
+
+//Auth
+@import "./auth/auth.scss";
+
+//General
+@import "./general/landing.scss";
+
+//Client
+//New order
+@import './client/new_order/new-order.scss';
+@import './client/new_order/fresh-new-order.scss';
+@import "./client/new_order/features/feature-0.scss";
+@import "./client/new_order/features/feature-2.scss";
+
+//Manager
+@import "./manager/settings.scss";
+@import "./manager/dashboard.scss";
+@import "./manager/users.scss";
+@import "./manager/plans.scss";
+@import "./manager/navbar.scss";
+@import "./manager/footer.scss";
+
+//Partials
+@import "./partials/modal.scss";
+@import "./partials/loader.scss";
+@import "./partials/switch.scss";
+
+//Externals
+$slick-font-path: "~slick-carousel/slick/fonts/";
+$slick-loader-path: "~slick-carousel/slick/";
+
+@import '~slick-carousel/slick/slick', '~slick-carousel/slick/slick-theme';
