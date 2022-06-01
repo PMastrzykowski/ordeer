@@ -150,3 +150,13 @@ export const newOrderStopPaying = () => {
         type: 'NEW_ORDER_STOP_PAYING'
     }
 }
+export const newOrderOpenPaymentModal = () => {
+    return {
+        type: 'NEW_ORDER_OPEN_PAYMENT_MODAL'
+    }
+}
+export const newOrderClosePaymentModal = () => {
+    return {
+        type: 'NEW_ORDER_CLOSE_PAYMENT_MODAL'
+    }
+}

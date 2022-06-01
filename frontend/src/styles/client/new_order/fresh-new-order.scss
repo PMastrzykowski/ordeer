@@ -565,6 +565,7 @@
     #view-checkout {
         background-color: $color-1;
         .view-checkout-body {
+            transition: all 0.2s ease;
             padding: 60px 0;
             .tap-tip {
                 @include flexbox();
@@ -670,10 +671,14 @@
                 }
             }
         }
+        .header{
+            transition: all 0.2s ease;
+        }
         .footer {
             @include flexbox();
             @include align-items(center);
             @include justify-content(space-between);
+            transition: all 0.2s ease;
             .label {
                 text-transform: uppercase;
                 font-size: 10px;
@@ -687,29 +692,33 @@
             }
         }
         .payment-modal {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
+            // width: 100vw;
+            // height: 100vh;
+            // position: absolute;
+            // top: 0;
+            // left: 0;
             .payment-modal-inner {
-                position: relative;
-                width: 100%;
-                height: 100%;
+                // position: relative;
+                // width: 100%;
+                // height: 100%;
                 .payment-modal-background {
+                    transition: all 0.2s ease;
+                    pointer-events: none;
+                    opacity:0;
                     width: 100vw;
-                    height: 100vh;
+                    height: 100%;
                     position: absolute;
                     top: 0;
                     left: 0;
                     background: $color-11;
-                    opacity: 0.8;
                 }
                 .payment-modal-body {
+                    transition: all 0.5s cubic-bezier(.29,.39,.19,1.34);
+                    transform: translateY(110%);
                     background: $color-1;
                     border-radius: 10px;
                     width: calc(100% - 20px);
-                    position: absolute;
+                    position: fixed;
                     bottom: 10px;
                     left: 10px;
                     padding: 20px 10px 10px;
@@ -738,6 +747,25 @@
                         font-size: 14px;
                         border-radius: 5px;
                         font-weight: 700;
+                    }
+                }
+            }
+        }
+        &.payment-modal-open{
+            .view-checkout-body,
+            .footer,
+            .header{
+                filter: blur(4px);
+  -webkit-filter: blur(4px);
+            }
+            .payment-modal{
+                .payment-modal-inner {
+                    .payment-modal-background {
+                        opacity: 0.8;
+                        pointer-events: all;
+                    }
+                    .payment-modal-body {
+                        transform: translateY(0%);
                     }
                 }
             }

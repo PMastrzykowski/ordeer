@@ -13,6 +13,8 @@ import {
     newOrderCustomizeCartItem,
     newOrderSaveCartItem,
     newOrderRemoveCartItem,
+    newOrderOpenPaymentModal,
+    newOrderClosePaymentModal,
 } from "../../../../actions/newOrder";
 import { Link } from "react-router-dom";
 import OptionMany from "./feature-partials/OptionMany";
@@ -30,9 +32,8 @@ import animateScrollTo from "animated-scroll-to";
 import { Waypoint } from "react-waypoint";
 import Slider from "react-slick";
 import click from "../../../click.svg";
-import PaymentButton from "./feature-partials/PaymentButton";
 import { PaymentRequestButtonElement } from "react-stripe-elements";
-import ApplePay from "./feature-partials/ApplePay";
+import PaymentButton from "./feature-partials/PaymentButton";
 import Div100vh from "react-div-100vh";
 import * as currency from "currency.js";
 import { currencyOptions } from "../../../../helpers/regional";
@@ -424,7 +425,7 @@ class FreshFeature extends React.Component {
             );
         }
         return (
-            <div id={`view-checkout`}>
+            <div id={`view-checkout`} className={`${this.props.newOrder.isPaymentModalOpen? 'payment-modal-open' : ''}`}>
                 <div
                     className={`view-checkout-body`}
                     ref={(div) => (this.view1body = div)}
@@ -595,24 +596,30 @@ class FreshFeature extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <Link
+                        {/* <Link
                             to={() =>
                                 `/neworder/${this.props.match.params.place}/${this.props.match.params.id}/payment`
                             }
+                        > */}
+                        <button
+                            className={`button`}
+                            onClick={this.props.newOrderOpenPaymentModal}
                         >
-                            <button className={`button`}>
-                                {["feature-2", "feature-4"].includes(
-                                    this.props.newOrder.pointFeature
-                                )
-                                    ? "Payment"
-                                    : "Place order"}
-                            </button>
-                        </Link>
+                            {["feature-2", "feature-4"].includes(
+                                this.props.newOrder.pointFeature
+                            )
+                                ? "Payment"
+                                : "Place order"}
+                        </button>
+                        {/* </Link> */}
                     </div>
                 </div>
-                <div className={"payment-modal"}>
+                <div className={`payment-modal`}>
                     <div className={"payment-modal-inner"}>
-                        <div className={"payment-modal-background"}></div>
+                        <div
+                            className={"payment-modal-background"}
+                            onClick={this.props.newOrderClosePaymentModal}
+                        ></div>
                         <div className={"payment-modal-body"}>
                             <div className={"total-label"}>Total</div>
                             <div className={"total-amount"}>
@@ -624,7 +631,7 @@ class FreshFeature extends React.Component {
                                 ).format()}
                             </div>
                             <Elements stripe={stripe}>
-                                <ApplePay />
+                                <PaymentButton />
                             </Elements>
                         </div>
                     </div>
@@ -646,7 +653,7 @@ class FreshFeature extends React.Component {
                 </div>
                 <div className={`payment-buttons`}>
                     <Elements stripe={stripe}>
-                        <ApplePay />
+                        <PaymentButton />
                     </Elements>
                     {/* <div
                         className={`payment-button apple`}
@@ -733,6 +740,8 @@ const mapDispatchToProps = (dispatch) =>
             newOrderCustomizeCartItem,
             newOrderSaveCartItem,
             newOrderRemoveCartItem,
+            newOrderOpenPaymentModal,
+            newOrderClosePaymentModal,
         },
         dispatch
     );

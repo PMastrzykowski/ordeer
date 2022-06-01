@@ -135,6 +135,7 @@ const initialState = {
         email: "",
         card: "",
     },
+    isPaymentModalOpen: false,
     paying: false,
     useSlidesSettings: {
         dots: false,
@@ -176,8 +177,9 @@ export default (state = initialState, action) => {
                 selectedItem: {
                     amount: 1,
                     ...state.placeMenu.items.filter(
-                    (item) => item.id === action.item
-                )[0]}
+                        (item) => item.id === action.item
+                    )[0],
+                },
             };
         case "NEW_ORDER_SET_VIEW":
             return {
@@ -257,22 +259,25 @@ export default (state = initialState, action) => {
                     ),
                 },
             };
-            case "NEW_ORDER_INCREASE_AMOUNT":
-                return {
-                    ...state,
-                    selectedItem: {
-                        ...state.selectedItem,
-                        amount: state.selectedItem.amount + 1
-                    }
-                };
-            case "NEW_ORDER_DECREASE_AMOUNT":
-                return {
-                    ...state,
-                    selectedItem: {
-                        ...state.selectedItem,
-                        amount: state.selectedItem.amount > 2 ? state.selectedItem.amount - 1 : 1
-                    }
-                };
+        case "NEW_ORDER_INCREASE_AMOUNT":
+            return {
+                ...state,
+                selectedItem: {
+                    ...state.selectedItem,
+                    amount: state.selectedItem.amount + 1,
+                },
+            };
+        case "NEW_ORDER_DECREASE_AMOUNT":
+            return {
+                ...state,
+                selectedItem: {
+                    ...state.selectedItem,
+                    amount:
+                        state.selectedItem.amount > 2
+                            ? state.selectedItem.amount - 1
+                            : 1,
+                },
+            };
         case "NEW_ORDER_ADD_TO_CART":
             return {
                 ...state,
@@ -349,6 +354,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInTestMode: true,
+            };
+        case "NEW_ORDER_OPEN_PAYMENT_MODAL":
+            return {
+                ...state,
+                isPaymentModalOpen: true,
+            };
+        case "NEW_ORDER_CLOSE_PAYMENT_MODAL":
+            return {
+                ...state,
+                isPaymentModalOpen: false,
             };
         default:
             return state;

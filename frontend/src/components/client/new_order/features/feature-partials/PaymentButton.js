@@ -1,146 +1,107 @@
-// import React from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import {
-//     newOrderStartPaying,
-//     newOrderStopPaying,
-//     newOrderSetErrors,
-// } from "../../../../../actions/newOrder";
-// import { PaymentRequestButtonElement, injectStripe } from "@stripe/react-stripe-js";
-// class PaymentButton extends React.Component {
-//     handleChange = ({ error }) => {
-//         if (error) {
-//             this.props.newOrderSetErrors({ card: error.message });
-//         } else {
-//             this.props.newOrderSetErrors({ card: "" });
-//         }
-//     };
-//     handleSubmit = (evt) => {
-//         evt.preventDefault();
-//         this.props.newOrderStartPaying();
-//         if (this.props.stripe) {
-//             // const cardElement = this.props.elements.getElement(CardElement);
-//             // this.props.handleResult(cardElement, this.props.stripe);
-//         } else {
-//             console.log("Stripe.js hasn't loaded yet.");
-//             this.props.newOrderStopPaying();
-//         }
-//     };
-//     componentDidMount=()=>{
-//         console.log(this.props)
-//     }
-//     render  =() => {
-//         // return <button onClick={()=>console.log(this.props)}>button</button>
-//         return ( this.props.stripe !== null?
-//             <div>
-//                 <PaymentRequestButtonElement options={this.props.stripe.paymentRequest({
-//             country: 'GB',
-//             currency: 'eur',
-//             total: {
-//               label: 'Demo total',
-//               amount: 1099,
-//             },
-//             requestPayerName: true,
-//             requestPayerEmail: true,
-//           })}/>
-//             </div>
-//             : <></>
-//         );
-//     }
-// }
-// const mapStateToProps = (state) => {
-//     return {
-//         newOrder: state.newOrder,
-//     };
-// };
-// const mapDispatchToProps = (dispatch) =>
-//     bindActionCreators(
-//         {
-//             newOrderStartPaying,
-//             newOrderStopPaying,
-//             newOrderSetErrors,
-//         },
-//         dispatch
-//     );
+import React, { useEffect, useState } from "react";
+import {
+    PaymentRequestButtonElement,
+    useStripe,
+    useElements,
+} from "@stripe/react-stripe-js";
+import StatusMessages, { useMessages } from "./StatusMessages";
 
-// export default connect(mapStateToProps, mapDispatchToProps)(PaymentButton);
-// class PaymentButton extends React.Component {
-//     constructor(props) {
-//       // For full documentation of the available paymentRequest options, see:
-//       // https://stripe.com/docs/stripe.js#the-payment-request-object
-//       const paymentRequest = props.stripe.paymentRequest({
-//         country: 'US',
-//         currency: 'usd',
-//         total: {
-//           label: 'Demo total',
-//           amount: 1000,
-//         },
-//       });
-//       paymentRequest.on('token', ({complete, token, ...data}) => {
-//         console.log('Received Stripe token: ', token);
-//         console.log('Received customer information: ', data);
-//         complete('success');
-//       });
-//       paymentRequest.canMakePayment().then((result) => {
-//         this.setState({canMakePayment: !!result});
-//       });
-//       this.state = {
-//         canMakePayment: false,
-//         paymentRequest,
-//       };
-//     }
-//     render() {
-//       return this.state.canMakePayment ? (
-//         <PaymentRequestButtonElement
-//           paymentRequest={this.state.paymentRequest}
-//           className="PaymentRequestButton"
-//           style={{
-//             // For more details on how to style the Payment Request Button, see:
-//             // https://stripe.com/docs/elements/payment-request-button#styling-the-element
-//             paymentRequestButton: {
-//               theme: 'light',
-//               height: '64px',
-//             },
-//           }}
-//         />
-//       ) : null;
-//     }
-//   }
-//   export default injectStripe(PaymentButton);
-import React, {useState, useEffect} from 'react';
-import {PaymentRequestButtonElement, useStripe} from '@stripe/react-stripe-js';
+const PaymentButton = () => {
+    const stripe = useStripe();
+    const elements = useElements();
+    const [paymentRequest, setPaymentRequest] = useState(null);
+    const [messages, addMessage] = useMessages();
 
-const CheckoutForm = () => {
-  const stripe = useStripe();
-  const [paymentRequest, setPaymentRequest] = useState(null);
-
-  useEffect(() => {
-    if (stripe) {
-      const pr = stripe.paymentRequest({
-        country: 'US',
-        currency: 'usd',
-        total: {
-          label: 'Demo total',
-          amount: 1099,
-        },
-        requestPayerName: true,
-        requestPayerEmail: true,
-      });
-
-      // Check the availability of the Payment Request API.
-      pr.canMakePayment().then(result => {
-        if (result) {
-          setPaymentRequest(pr);
+    useEffect(() => {
+        if (!stripe || !elements) {
+            return;
         }
-      });
-    }
-  }, [stripe]);
 
-  if (paymentRequest) {
-    return <PaymentRequestButtonElement options={{paymentRequest}} />
-  }
+        const pr = stripe.paymentRequest({
+            country: "US",
+            currency: "usd",
+            total: {
+                label: "Demo total",
+                amount: 1999,
+            },
+            requestPayerName: true,
+            requestPayerEmail: true,
+        });
 
-  // Use a traditional checkout form.
-  return 'Insert your form or button component here.';
-}
-export default CheckoutForm
+        // Check the availability of the Payment Request API.
+        pr.canMakePayment().then((result) => {
+            if (result) {
+                setPaymentRequest(pr);
+            }
+        });
+
+        pr.on("paymentmethod", async (e) => {
+            const { error: backendError, clientSecret } = await fetch(
+                "/create-payment-intent",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        paymentMethodType: "card",
+                        currency: "usd",
+                    }),
+                }
+            ).then((r) => r.json());
+
+            if (backendError) {
+                addMessage(backendError.message);
+                return;
+            }
+
+            addMessage("Client secret returned");
+
+            const { error: stripeError, paymentIntent } =
+                await stripe.confirmCardPayment(
+                    clientSecret,
+                    {
+                        payment_method: e.paymentMethod.id,
+                    },
+                    { handleActions: false }
+                );
+
+            if (stripeError) {
+                // Show error to your customer (e.g., insufficient funds)
+                addMessage(stripeError.message);
+                return;
+            }
+
+            // Show a success message to your customer
+            // There's a risk of the customer closing the window before callback
+            // execution. Set up a webhook or plugin to listen for the
+            // payment_intent.succeeded event that handles any business critical
+            // post-payment actions.
+            addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
+        });
+    }, [stripe, elements, addMessage]);
+
+    return (
+        <>
+            {paymentRequest ? (
+                <PaymentRequestButtonElement
+                    options={{
+                        paymentRequest,
+                        style: {
+                            paymentRequestButton: {
+                                theme: "dark",
+                                height: "64px",
+                            },
+                        },
+                    }}
+                />
+            ) : (
+                <button className={"order-now"}>Order now</button>
+            )}
+
+            <StatusMessages messages={messages} />
+        </>
+    );
+};
+
+export default PaymentButton;
