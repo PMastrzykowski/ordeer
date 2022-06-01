@@ -713,8 +713,9 @@
                     background: $color-11;
                 }
                 .payment-modal-body {
-                    transition: all 0.5s cubic-bezier(.29,.39,.19,1.34);
-                    transform: translateY(110%);
+                    transition: all 0.4s cubic-bezier(.29,.39,.19,1.34);
+                    opacity: 0;
+                    transform: translateY(400px);
                     background: $color-1;
                     border-radius: 10px;
                     width: calc(100% - 20px);
@@ -765,7 +766,8 @@
                         pointer-events: all;
                     }
                     .payment-modal-body {
-                        transform: translateY(0%);
+                        transform: translateY(0);
+                        opacity: 1;
                     }
                 }
             }
