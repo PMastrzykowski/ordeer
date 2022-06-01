@@ -227,7 +227,7 @@
         @include flex-direction(column);
         @include justify-content(space-between);
         width: 100%;
-        height: 100vh;
+        height: 100%;
         max-width: 100%;
         background-color: $color-1;
         .view-hi-image {
@@ -671,7 +671,7 @@
                 }
             }
         }
-        .header{
+        .header {
             transition: all 0.2s ease;
         }
         .footer {
@@ -704,16 +704,17 @@
                 .payment-modal-background {
                     transition: all 0.2s ease;
                     pointer-events: none;
-                    opacity:0;
+                    opacity: 0;
                     width: 100vw;
                     height: 100%;
-                    position: absolute;
+                    position: fixed;
                     top: 0;
                     left: 0;
                     background: $color-11;
+                    z-index: 100;
                 }
                 .payment-modal-body {
-                    transition: all 0.4s cubic-bezier(.29,.39,.19,1.34);
+                    transition: all 0.4s cubic-bezier(0.29, 0.39, 0.19, 1.34);
                     opacity: 0;
                     transform: translateY(400px);
                     background: $color-1;
@@ -724,6 +725,7 @@
                     left: 10px;
                     padding: 20px 10px 10px;
                     box-sizing: border-box;
+                    z-index: 200;
                     .total-label {
                         width: 100%;
                         font-size: 12px;
@@ -739,7 +741,7 @@
                         text-align: center;
                         margin: 10px 0 20px;
                     }
-                    .order-now{
+                    .order-now {
                         width: 100%;
                         height: 64px;
                         background: $color-11;
@@ -752,14 +754,14 @@
                 }
             }
         }
-        &.payment-modal-open{
+        &.payment-modal-open {
             .view-checkout-body,
             .footer,
-            .header{
+            .header {
                 filter: blur(4px);
-  -webkit-filter: blur(4px);
+                -webkit-filter: blur(4px);
             }
-            .payment-modal{
+            .payment-modal {
                 .payment-modal-inner {
                     .payment-modal-background {
                         opacity: 0.8;

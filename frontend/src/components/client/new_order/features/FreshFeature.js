@@ -79,6 +79,7 @@ class FreshFeature extends React.Component {
         }
     };
     viewHi = () => (
+        <Div100vh>
         <div id="view-hi" className={this.props.start ? "start" : ""}>
             <div className={`view-hi-image`}>
                 {this.props.newOrder.placeMenu.images.map((image) => (
@@ -103,6 +104,7 @@ class FreshFeature extends React.Component {
                 </div>
             </div>
         </div>
+        </Div100vh>
     );
     viewMenu = () => (
         <div id="view-menu">
