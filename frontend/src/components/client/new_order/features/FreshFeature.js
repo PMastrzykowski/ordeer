@@ -80,30 +80,30 @@ class FreshFeature extends React.Component {
     };
     viewHi = () => (
         <Div100vh>
-        <div id="view-hi" className={this.props.start ? "start" : ""}>
-            <div className={`view-hi-image`}>
-                {this.props.newOrder.placeMenu.images.map((image) => (
-                    <div
-                        key={image.id}
-                        className={"image-wrapper"}
-                        style={{ backgroundImage: `url("${image.url}")` }}
-                    />
-                ))}
-            </div>
-            <div className={`view-hi-footer`}>
-                <div>
-                    <div className={`welcome`}>Welcome to</div>
-                    <div className={`place-name`}>
-                        {this.props.newOrder.placeName}
+            <div id="view-hi" className={this.props.start ? "start" : ""}>
+                <div className={`view-hi-image`}>
+                    {this.props.newOrder.placeMenu.images.map((image) => (
+                        <div
+                            key={image.id}
+                            className={"image-wrapper"}
+                            style={{ backgroundImage: `url("${image.url}")` }}
+                        />
+                    ))}
+                </div>
+                <div className={`view-hi-footer`}>
+                    <div>
+                        <div className={`welcome`}>Welcome to</div>
+                        <div className={`place-name`}>
+                            {this.props.newOrder.placeName}
+                        </div>
+                    </div>
+                    <div>
+                        <Link to={(location) => `${location.pathname}/menu`}>
+                            <button className={`start-button`}>Start</button>
+                        </Link>
                     </div>
                 </div>
-                <div>
-                    <Link to={(location) => `${location.pathname}/menu`}>
-                        <button className={`start-button`}>Start</button>
-                    </Link>
-                </div>
             </div>
-        </div>
         </Div100vh>
     );
     viewMenu = () => (
@@ -427,16 +427,19 @@ class FreshFeature extends React.Component {
             );
         }
         return (
-            <div id={`view-checkout`} className={`${this.props.newOrder.isPaymentModalOpen? 'payment-modal-open' : ''}`}>
+            <div
+                id={`view-checkout`}
+                className={`${
+                    this.props.newOrder.isPaymentModalOpen
+                        ? "payment-modal-open"
+                        : ""
+                }`}
+            >
                 <div
                     className={`view-checkout-body`}
                     ref={(div) => (this.view1body = div)}
                     onScroll={this.handleScrollCheckout}
                 >
-                    <div className={`tap-tip`}>
-                        <img src={click} alt={`tap`} />
-                        Tap item to edit
-                    </div>
                     {renderCheckout(this.props.newOrder).items.map(
                         (item, itemIndex) => (
                             <div
@@ -444,10 +447,21 @@ class FreshFeature extends React.Component {
                                 onClick={(e) =>
                                     toggleCheckoutButtons(e, item.cartId)
                                 }
-                                className={"cart-item"}
+                                className={`cart-item ${
+                                    item.cartId ===
+                                    this.props.newOrder.checkoutButtons
+                                        ? "open"
+                                        : ""
+                                }`}
                             >
                                 <div className={"cart-item-header"}>
                                     <div className={"cart-item-name"}>
+                                        <div className={"chevron-wrapper"}>
+                                            <div
+                                                className={"chevron"}
+                                            ></div>
+                                        </div>
+
                                         {item.name}
                                     </div>
                                     <div className={"cart-item-price"}>
@@ -460,108 +474,109 @@ class FreshFeature extends React.Component {
                                         ).format()}
                                     </div>
                                 </div>
-                                <div className={"cart-item-special-fields"}>
-                                    {item.specialFields.map((field) => (
-                                        <div
-                                            key={field.id}
-                                            className={`cart-item-special-field`}
-                                        >
-                                            <span className={`field-name`}>
-                                                {field.name}
-                                            </span>
-                                            :{" "}
-                                            {field.options.map(
-                                                (option, optionIndex) => {
-                                                    switch (field.type) {
-                                                        case "one":
-                                                            return option.value ? (
-                                                                <span
-                                                                    key={
-                                                                        optionIndex
-                                                                    }
-                                                                >
-                                                                    <span
-                                                                        className={`option ${
-                                                                            option.value
-                                                                                ? "positive"
-                                                                                : "negative"
-                                                                        }`}
-                                                                    >
-                                                                        {
-                                                                            option.name
-                                                                        }
-                                                                    </span>
-                                                                </span>
-                                                            ) : null;
-                                                        case "many":
-                                                            return (
-                                                                <span
-                                                                    key={
-                                                                        optionIndex
-                                                                    }
-                                                                >
-                                                                    <span
-                                                                        className={`option ${
-                                                                            option.value
-                                                                                ? "positive"
-                                                                                : "negative"
-                                                                        }`}
-                                                                    >
-                                                                        {
-                                                                            option.name
-                                                                        }
-                                                                    </span>
-                                                                    {optionIndex <
-                                                                    field
-                                                                        .options
-                                                                        .length -
-                                                                        1
-                                                                        ? ", "
-                                                                        : ""}
-                                                                </span>
-                                                            );
-                                                    }
-                                                }
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
                                 <div
-                                    className={`buttons-wrapper ${
-                                        item.customizable ? "customizable" : ""
-                                    } ${
-                                        item.cartId ===
-                                        this.props.newOrder.checkoutButtons
-                                            ? "open"
-                                            : ""
-                                    }`}
+                                    className={`dropdown`}
                                 >
-                                    {item.customizable && (
+                                    <div className={"cart-item-special-fields"}>
+                                        {item.specialFields.map((field) => (
+                                            <div
+                                                key={field.id}
+                                                className={`cart-item-special-field`}
+                                            >
+                                                <span className={`field-name`}>
+                                                    {field.name}
+                                                </span>
+                                                :{" "}
+                                                {field.options.map(
+                                                    (option, optionIndex) => {
+                                                        switch (field.type) {
+                                                            case "one":
+                                                                return option.value ? (
+                                                                    <span
+                                                                        key={
+                                                                            optionIndex
+                                                                        }
+                                                                    >
+                                                                        <span
+                                                                            className={`option ${
+                                                                                option.value
+                                                                                    ? "positive"
+                                                                                    : "negative"
+                                                                            }`}
+                                                                        >
+                                                                            {
+                                                                                option.name
+                                                                            }
+                                                                        </span>
+                                                                    </span>
+                                                                ) : null;
+                                                            case "many":
+                                                                return (
+                                                                    <span
+                                                                        key={
+                                                                            optionIndex
+                                                                        }
+                                                                    >
+                                                                        <span
+                                                                            className={`option ${
+                                                                                option.value
+                                                                                    ? "positive"
+                                                                                    : "negative"
+                                                                            }`}
+                                                                        >
+                                                                            {
+                                                                                option.name
+                                                                            }
+                                                                        </span>
+                                                                        {optionIndex <
+                                                                        field
+                                                                            .options
+                                                                            .length -
+                                                                            1
+                                                                            ? ", "
+                                                                            : ""}
+                                                                    </span>
+                                                                );
+                                                        }
+                                                    }
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div
+                                        className={`buttons-wrapper ${
+                                            item.customizable
+                                                ? "customizable"
+                                                : ""
+                                        }`}
+                                    >
+                                        {item.customizable && (
+                                            <button
+                                                className={"edit"}
+                                                onClick={() => {
+                                                    this.props.newOrderCustomizeCartItem(
+                                                        item.cartId
+                                                    );
+                                                    this.props.history.push(
+                                                        `/neworder/${this.props.match.params.place}/${this.props.match.params.id}/cart/${item.cartId}`
+                                                    );
+                                                }}
+                                            >
+                                                Edit
+                                            </button>
+                                        )}
                                         <button
-                                            className={"edit"}
+                                            className={"remove"}
                                             onClick={() => {
                                                 this.props.newOrderCustomizeCartItem(
                                                     item.cartId
                                                 );
-                                                this.props.history.push(
-                                                    `/neworder/${this.props.match.params.place}/${this.props.match.params.id}/cart/${item.cartId}`
-                                                );
+                                                this.props.newOrderRemoveCartItem();
                                             }}
                                         >
-                                            Edit
+                                            Remove
                                         </button>
-                                    )}
-                                    <button
-                                        className={"remove"}
-                                        onClick={() => {
-                                            this.props.newOrderCustomizeCartItem(
-                                                item.cartId
-                                            );
-                                            this.props.newOrderRemoveCartItem();
-                                        }}
-                                    >
-                                        Remove
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                         )

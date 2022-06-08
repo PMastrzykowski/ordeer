@@ -566,35 +566,65 @@
         background-color: $color-1;
         .view-checkout-body {
             transition: all 0.2s ease;
-            padding: 60px 0;
-            .tap-tip {
-                @include flexbox();
-                @include justify-content(center);
-                @include align-items(center);
-                font-size: 14px;
-                margin: 50px auto;
-                img {
-                    width: 30px;
-                    margin: 10px 10px 10px 0;
-                }
-            }
+            padding: 100px 0;
             .cart-item {
                 margin: 20px;
                 width: calc(100% - 40px);
                 box-sizing: border-box;
                 font-size: 16px;
-                border-bottom: 1px solid $color-11;
-                padding-bottom: 15px;
+                border: 1px solid #f8f8f8;
+                border-radius: 5px;
+                &.open {
+                    .cart-item-header {
+                        .cart-item-name {
+                            .chevron-wrapper {
+                                .chevron {
+                                    transform: rotate(-45deg);
+                                }
+                            }
+                        }
+                    }
+                    .dropdown {
+                        height: 150px;
+                        opacity: 1;
+                        .buttons-wrapper {
+                            button {
+                            }
+                        }
+                    }
+                }
                 .cart-item-header {
+                    padding: 20px;
+                    border-radius: 5px;
+                    background-color: $color-3;
                     @include flexbox();
                     @include justify-content(space-between);
                     .cart-item-name {
+                        @include flexbox();
+                        .chevron-wrapper {
+                            margin-right: 20px;
+                            width: 19px;
+                            height: 19px;
+                            position: relative;
+                            .chevron {
+                                transition: all 0.2s ease;
+                                width: 10px;
+                                height: 10px;
+                                top: 4px;
+                                left: 4px;
+                                position: absolute;
+                                border-color: #000000;
+                                border-style: solid;
+                                border-width: 0 0 1px 1px;
+                                transform: rotate(-135deg);
+                            }
+                        }
                     }
                     .cart-item-price {
                     }
                 }
                 .cart-item-special-fields {
-                    margin: 30px 0 15px;
+                    margin: 20px;
                     .cart-item-special-field {
                         font-size: 12px;
                         margin: 5px 0;
@@ -614,38 +644,37 @@
                         }
                     }
                 }
-                .buttons-wrapper {
-                    @include flexbox();
-                    @include justify-content(space-between);
-                    overflow: hidden;
-                    width: 100%;
+                .dropdown {
                     height: 0;
                     transition: all 0.6s;
-                    &.open {
-                        height: 50px;
-                        button {
-                            opacity: 1;
-                        }
-                    }
-                    button {
+                    overflow: hidden;
+                    width: 100%;
+                    opacity: 0;
+                    .buttons-wrapper {
+                        @include flexbox();
+                        @include justify-content(space-between);
                         width: 100%;
-                        height: 50px;
-                        border: 1px solid $color-11;
-                        color: $color-11;
-                        border-radius: 3px;
-                        background-color: transparent;
-                        text-transform: uppercase;
-                        letter-spacing: 2px;
-                        font-size: 10px;
-                        opacity: 0;
-                        transition: all 0.6s;
-                    }
-                    &.customizable {
+                        padding: 0 20px;
+                        box-sizing: border-box;
                         button {
-                            width: calc(50% - 5px);
-                            &.edit {
-                                background-color: $color-11;
-                                color: $color-1;
+                            width: 100%;
+                            height: 50px;
+                            border: 1px solid $color-11;
+                            color: $color-11;
+                            border-radius: 3px;
+                            background-color: transparent;
+                            text-transform: uppercase;
+                            letter-spacing: 2px;
+                            font-size: 10px;
+                            transition: all 0.6s;
+                        }
+                        &.customizable {
+                            button {
+                                width: calc(50% - 5px);
+                                &.edit {
+                                    background-color: $color-11;
+                                    color: $color-1;
+                                }
                             }
                         }
                     }

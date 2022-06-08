@@ -4,7 +4,14 @@ import {
     useStripe,
     useElements,
 } from "@stripe/react-stripe-js";
+import axios from 'axios';
 import StatusMessages, { useMessages } from "./StatusMessages";
+import { connect } from "react-redux";
+import { compose, bindActionCreators } from "redux";
+import {
+    newOrderStartPaying,
+    newOrderStopPaying,
+} from "../../../../../actions/newOrder";
 
 const PaymentButton = () => {
     const stripe = useStripe();
@@ -16,7 +23,17 @@ const PaymentButton = () => {
         if (!stripe || !elements) {
             return;
         }
-
+        // this.props.newOrderStartPaying();
+        // axios
+        //     .get(`/api/stripe/plans`)
+        //     .then((res) => {
+        //         if (res.data.success) {
+        //             this.props.stripeSetProducts(res.data.products.data);
+        //         } else {
+        //             console.log(res.data);
+        //         }
+        //     })
+        //     .catch((err) => {});
         const pr = stripe.paymentRequest({
             country: "US",
             currency: "usd",
@@ -103,5 +120,20 @@ const PaymentButton = () => {
         </>
     );
 };
+const mapStateToProps = (state) => {
+    return {
+        newOrder: state.newOrder,
+    };
+};
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+          newOrderStartPaying,
+          newOrderStopPaying,
+        },
+        dispatch
+    );
 
-export default PaymentButton;
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps)
+)(PaymentButton);
