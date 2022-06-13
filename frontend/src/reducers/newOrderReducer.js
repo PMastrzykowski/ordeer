@@ -33,90 +33,90 @@ const initialState = {
     },
     cart: [
         {
-            cartId: "36rFF21hx",
-            amount: 1,
-            menuId: "7AVuXmRs2",
-            name: "Donuts",
-            price: 1000,
-            description: "Good donuts are good",
-            tax: 0,
-            id: "0i2Ev5G5R",
-            images: [
-                {
-                    id: "98zlQ4aUP",
-                    url: "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp",
-                },
-                {
-                    id: "98zlQ4aUPe",
-                    url: "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp",
-                },
-                {
-                    id: "98zlQ4aUPr",
-                    url: "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp",
-                },
+            "cartId": "ztodRwJAL",
+            "menuId": "7AVuXmRs2",
+            "amount": 2,
+            "name": "Donuts",
+            "price": 1000,
+            "description": "Good donuts are good",
+            "tax": 0,
+            "id": "0i2Ev5G5R",
+            "images": [
+              {
+                "id": "98zlQ4aUP",
+                "url": "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
+              },
+              {
+                "id": "98zlQ4aUPe",
+                "url": "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
+              },
+              {
+                "id": "98zlQ4aUPr",
+                "url": "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
+              }
             ],
-            specialFields: [
-                {
-                    name: "Filling",
-                    type: "one",
-                    options: [
-                        {
-                            name: "Plane",
-                            id: "8werazEah",
-                            priceImpact: 0,
-                            value: false,
-                            default: true,
-                        },
-                        {
-                            name: "Strawberries",
-                            id: "Z2Y6SS3Ur",
-                            priceImpact: 100,
-                            value: true,
-                            default: false,
-                        },
-                        {
-                            name: "Blueberries",
-                            id: "6DJp5f9OO",
-                            priceImpact: 200,
-                            value: false,
-                            default: false,
-                        },
-                    ],
-                    id: "0Ldy@62D@",
-                },
-                {
-                    name: "Toppings",
-                    type: "many",
-                    options: [
-                        {
-                            name: "Powder",
-                            id: "XIQaBfKTX",
-                            priceImpact: 0,
-                            value: true,
-                            default: true,
-                        },
-                        {
-                            name: "Almonds",
-                            id: "Auh8SzOfQ",
-                            priceImpact: 50,
-                            value: false,
-                            default: false,
-                        },
-                        {
-                            name: "Marshmallows",
-                            id: "vKp7e$LOY",
-                            priceImpact: 100,
-                            value: true,
-                            default: false,
-                        },
-                    ],
-                    id: "rk9hn78b3",
-                },
+            "specialFields": [
+              {
+                "name": "Filling",
+                "type": "one",
+                "options": [
+                  {
+                    "name": "Plane",
+                    "id": "8werazEah",
+                    "priceImpact": 0,
+                    "value": false,
+                    "default": true
+                  },
+                  {
+                    "name": "Strawberries",
+                    "id": "Z2Y6SS3Ur",
+                    "priceImpact": 100,
+                    "value": false,
+                    "default": false
+                  },
+                  {
+                    "name": "Blueberries",
+                    "id": "6DJp5f9OO",
+                    "priceImpact": 200,
+                    "value": true,
+                    "default": false
+                  }
+                ],
+                "id": "0Ldy@62D@"
+              },
+              {
+                "name": "Toppings",
+                "type": "many",
+                "options": [
+                  {
+                    "name": "Powder",
+                    "id": "XIQaBfKTX",
+                    "priceImpact": 0,
+                    "value": true,
+                    "default": true
+                  },
+                  {
+                    "name": "Almonds",
+                    "id": "Auh8SzOfQ",
+                    "priceImpact": 50,
+                    "value": true,
+                    "default": false
+                  },
+                  {
+                    "name": "Marshmallows",
+                    "id": "vKp7e$LOY",
+                    "priceImpact": 100,
+                    "value": false,
+                    "default": false
+                  }
+                ],
+                "id": "rk9hn78b3"
+              }
             ],
-            workUnits: [],
-            available: true,
-            category: "5ufgFQ3xN",
-        },
+            "workUnits": [],
+            "available": true,
+            "category": "5ufgFQ3xN"
+          }
     ],
     view: "",
     cardPayment: {
@@ -148,8 +148,95 @@ const initialState = {
         slidesToScroll: 1,
     },
 };
-
 export default (state = initialState, action) => {
+    const checkIfInCart = (update = false) => {
+        let siblings = state.cart.filter((item) => {
+            let result = true;
+            if (item.id === state.selectedItem.id) {
+                item.specialFields.forEach((field) => {
+                    field.options.forEach((option) => {
+                        if (
+                            state.selectedItem.specialFields
+                                .filter(
+                                    (selectedItemField) =>
+                                        selectedItemField.id === field.id
+                                )[0]
+                                .options.filter(
+                                    (selectedItemOption) =>
+                                        selectedItemOption.id === option.id
+                                )[0].value !== option.value
+                        ) {
+                            result = false;
+                        }
+                    });
+                });
+                return result;
+            } else {
+                return false;
+            }
+        });
+        if (siblings.length > 0) {
+            if (update) {
+                //Sibling in cart, remove old item, increase quantity of siblings
+                return {
+                    ...state,
+                    cart: state.cart
+                        .map((item) => {
+                            if (item.cartId === siblings[0].cartId) {
+                                return {
+                                    ...item,
+                                    amount:
+                                        item.amount + state.selectedItem.amount,
+                                };
+                            } else {
+                                return item;
+                            }
+                        })
+                        .filter(
+                            (item) => item.cartId !== state.selectedItem.cartId
+                        ),
+                };
+            } else {
+                //Sibling in cart, increase quantity of siblings
+                return {
+                    ...state,
+                    cart: state.cart.map((item) =>
+                        item.cartId === siblings[0].cartId
+                            ? {
+                                  ...item,
+                                  amount: item.amount + siblings[0].amount,
+                              }
+                            : item
+                    ),
+                };
+            }
+        } else {
+            if (update) {
+                //No sibling in cart, update item
+                return {
+                    ...state,
+                    cart: state.cart.map((item) =>
+                        item.cartId === state.selectedItem.cartId
+                            ? state.selectedItem
+                            : item
+                    ),
+                };
+            } else {
+                //No sibling in cart, new item
+                return {
+                    ...state,
+                    cart: [
+                        ...state.cart,
+                        {
+                            cartId: short.generate(),
+                            menuId: state.placeMenu._id,
+                            ...state.selectedItem,
+                        },
+                    ],
+                };
+            }
+        }
+    };
     switch (action.type) {
         case "NEW_ORDER_SET_QR_DATA":
             return {
@@ -279,17 +366,7 @@ export default (state = initialState, action) => {
                 },
             };
         case "NEW_ORDER_ADD_TO_CART":
-            return {
-                ...state,
-                cart: [
-                    ...state.cart,
-                    {
-                        cartId: short.generate(),
-                        menuId: state.placeMenu._id,
-                        ...state.selectedItem,
-                    },
-                ],
-            };
+            return checkIfInCart();
         case "NEW_ORDER_TOGGLE_CHECKOUT_BUTTONS":
             return {
                 ...state,
@@ -304,14 +381,7 @@ export default (state = initialState, action) => {
                 ),
             };
         case "NEW_ORDER_SAVE_CART_ITEM":
-            return {
-                ...state,
-                cart: state.cart.map((item) =>
-                    item.cartId === state.selectedItem.cartId
-                        ? state.selectedItem
-                        : item
-                ),
-            };
+            return checkIfInCart(true);
         case "NEW_ORDER_CUSTOMIZE_CART_ITEM":
             return {
                 ...state,

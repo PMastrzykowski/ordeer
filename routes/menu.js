@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 var Datauri = require("datauri");
+const currency = require("currency.js");
 
 const fileFilter = (req, file, cb) => {
     if (["image/jpeg", "image/png", "image/webp"].includes(file.mimetype)) {
@@ -27,6 +28,7 @@ const upload = multer({
     limits: { fileSize: 1024 * 1024 * 2.5 },
     fileFilter,
 });
+const User = require("../models/User");
 const Menu = require("../models/Menu");
 
 //Create
@@ -337,5 +339,132 @@ router.post(
             });
     }
 );
+
+// order
+
+router.post("/checkbeforepayment", (req, res) => {
+    const currencyOptions = (symbol) => {
+        switch (symbol) {
+            case "PLN":
+                return {
+                    symbol: "z\u0142",
+                    decimal: ",",
+                    separator: " ",
+                    pattern: `# !`,
+                    fromCents: false,
+                };
+            case "EUR":
+                return {
+                    symbol: "\u20ac",
+                    decimal: ".",
+                    separator: " ",
+                    pattern: `! #`,
+                    fromCents: false,
+                };
+            case "USD":
+                return {
+                    symbol: "$",
+                    decimal: ".",
+                    separator: " ",
+                    pattern: `! #`,
+                    fromCents: false,
+                };
+        }
+    };
+    Menu.find({ _id: req.body.menuId })
+        .then((menuData) => {
+            if (menuData.length === 0) {
+                return res.status(400).json({
+                    error: `Menu ${req.body.menuId} does not exist.`,
+                });
+            }
+            let menu = menuData[0];
+            User.find({ _id: menu.place })
+                .then((userData) => {
+                    if (userData.length === 0) {
+                        return res.status(400).json({
+                            error: `User ${menu.place} does not exist.`,
+                        });
+                    }
+                    let user = userData[0];
+                    let options = currencyOptions(user.currency);
+                    var total = currency(0, options);
+                    req.body.cart.forEach((cartItem) => {
+                        let filteredMenu = menu.items.filter(
+                            (item) => item.id === cartItem.id
+                        );
+                        if (filteredMenu.length === 0) {
+                            return res.status(400).json({
+                                error: `Item ${cartItem.id} does not exist.`,
+                                itemId: cartItem.id,
+                            });
+                        }
+
+                        let menuItem = filteredMenu[0];
+                        var price = currency(menuItem.price, options);
+                        cartItem.specialFields.forEach((cartField) => {
+                            let menuFields = menuItem.specialFields.filter(
+                                (menuField) => menuField.id === cartField.id
+                            );
+                            if (menuFields.length === 0) {
+                                return res.status(400).json({
+                                    error: `Item ${cartItem.id} does not have a special field of ${cartField.id}.`,
+                                    itemId: cartItem.id,
+                                    fieldId: cartField.id,
+                                });
+                            }
+                            let menuField = menuFields[0];
+                            cartField.options.forEach((cartOption) => {
+                                let menuOptions =
+                                    menuField.options.filter(
+                                        (menuOption) =>
+                                            menuOption.id === cartOption.id
+                                    );
+                                if (menuOptions.length === 0) {
+                                    return res.status(400).json({
+                                        error: `Item ${cartItem.id} does not have a special field of ${cartField.id} with option ${cartOption.id}.`,
+                                        itemId: cartItem.id,
+                                        fieldId: cartField.id,
+                                        optionId: cartOption.id,
+                                    });
+                                }
+                                let menuOption = menuOptions[0];
+                                if (cartOption.value !== cartOption.default) {
+                                    if (cartOption.default) {
+                                        price = currency(
+                                            price.value,
+                                            options
+                                        ).subtract(menuOption.priceImpact);
+                                    } else {
+                                        price = currency(
+                                            price.value,
+                                            options
+                                        ).add(menuOption.priceImpact);
+                                    }
+                                }
+                            });
+                        });
+                        let multipliedPrice = currency(
+                            price.value,
+                            options
+                        ).multiply(cartItem.amount).value;
+                        total = currency(total.value, options).add(
+                            multipliedPrice
+                        );
+                    });
+                    return res.json({ success: true, total });
+                })
+                .catch((err) => {
+                    console.error("There was an error", err);
+                    return res
+                        .status(400)
+                        .json({ error: "User was not found." });
+                });
+        })
+        .catch((err) => {
+            console.error("There was an error", err);
+            return res.status(400).json({ error: "Menu was not found." });
+        });
+});
 
 module.exports = router;

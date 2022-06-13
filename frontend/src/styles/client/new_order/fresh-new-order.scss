@@ -572,8 +572,9 @@
                 width: calc(100% - 40px);
                 box-sizing: border-box;
                 font-size: 16px;
-                border: 1px solid $color-11;
-                border-radius: 5px;
+                border-width: 0 0 1px 0;
+                border-style: solid;
+                border-color: $color-5;
                 &.open {
                     .cart-item-header {
                         .cart-item-name {
@@ -594,13 +595,8 @@
                     }
                 }
                 .cart-item-header {
-                    padding: 20px;
-                    border-radius: 5px;
-                    width: calc(100% - 40px);
-                    transform: translate3d(-1px, -1px, 0);
-                    border-width: 1px 1px 0 1px;
-                    border-style: solid;
-                    border-color: $color-11;
+                    padding: 20px 0;
+                    width: 100%;
                     @include flexbox();
                     @include justify-content(space-between);
                     .cart-item-name {
@@ -628,7 +624,7 @@
                     }
                 }
                 .cart-item-special-fields {
-                    margin: 20px;
+                    padding: 0 20px 20px;
                     .cart-item-special-field {
                         font-size: 12px;
                         margin: 5px 0;
@@ -659,6 +655,7 @@
                         @include justify-content(space-between);
                         width: 100%;
                         padding: 0 20px;
+                        margin: 0 0 20px;
                         box-sizing: border-box;
                         button {
                             width: 100%;

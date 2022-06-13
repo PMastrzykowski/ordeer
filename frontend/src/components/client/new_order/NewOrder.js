@@ -87,10 +87,10 @@ class NewOrder extends React.Component {
                                 "id" : "sweets"
                             },
                         ],
-                        "items" : [ 
+                        "items" : [
                             {
-                                "name" : "Donuts",
-                                "price" : 1000,
+                                "name" : "Donut",
+                                "price" : "1000",
                                 "description" : "Good donuts are good",
                                 "tax" : 0,
                                 "id" : "0i2Ev5G5R",
@@ -98,72 +98,66 @@ class NewOrder extends React.Component {
                                     {
                                         "id" : "98zlQ4aUP",
                                         "url" : "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
-                                    },
-                                    {
-                                        "id" : "98zlQ4aUPe",
-                                        "url" : "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
-                                    },
-                                    {
-                                        "id" : "98zlQ4aUPr",
-                                        "url" : "http://res.cloudinary.com/duqi6fe19/image/upload/v1650218409/qrspots/60805d9f1774d06ea85a5c7a/menus/7AVuXmRs2/0i2Ev5G5R/98zlQ4aUP.webp"
                                     }
                                 ],
-                                "specialFields" : [{
-                                    "name" : "Filling",
-                                    "type" : "one",
-                                    "options" : [ 
-                                        {
-                                            "name" : "Plane",
-                                            "id" : "8werazEah",
-                                            "priceImpact" : 0,
-                                            "value" : true,
-                                            "default" : true
-                                        }, 
-                                        {
-                                            "name" : "Strawberries",
-                                            "id" : "Z2Y6SS3Ur",
-                                            "priceImpact" : 100,
-                                            "value" : false,
-                                            "default" : false
-                                        }, 
-                                        {
-                                            "name" : "Blueberries",
-                                            "id" : "6DJp5f9OO",
-                                            "priceImpact" : 200,
-                                            "value" : false,
-                                            "default" : false
-                                        }
-                                    ],
-                                    "id" : "0Ldy@62D@"
-                                }, 
-                                {
-                                    "name" : "Toppings",
-                                    "type" : "many",
-                                    "options" : [ 
-                                        {
-                                            "name" : "Powder",
-                                            "id" : "XIQaBfKTX",
-                                            "priceImpact" : 0,
-                                            "value" : true,
-                                            "default" : true
-                                        }, 
-                                        {
-                                            "name" : "Almonds",
-                                            "id" : "Auh8SzOfQ",
-                                            "priceImpact" : 50,
-                                            "value" : false,
-                                            "default" : false
-                                        }, 
-                                        {
-                                            "name" : "Marshmallows",
-                                            "id" : "vKp7e$LOY",
-                                            "priceImpact" : 100,
-                                            "value" : false,
-                                            "default" : false
-                                        }
-                                    ],
-                                    "id" : "rk9hn78b3"
-                                }],
+                                "specialFields" : [ 
+                                    {
+                                        "name" : "Filling",
+                                        "type" : "one",
+                                        "options" : [ 
+                                            {
+                                                "name" : "Plane",
+                                                "id" : "8werazEah",
+                                                "priceImpact" : 0,
+                                                "value" : true,
+                                                "default" : true
+                                            }, 
+                                            {
+                                                "name" : "Strawberries",
+                                                "id" : "Z2Y6SS3Ur",
+                                                "priceImpact" : "100",
+                                                "value" : false,
+                                                "default" : false
+                                            }, 
+                                            {
+                                                "name" : "Blueberries",
+                                                "id" : "6DJp5f9OO",
+                                                "priceImpact" : "200",
+                                                "value" : false,
+                                                "default" : false
+                                            }
+                                        ],
+                                        "id" : "0Ldy@62D@"
+                                    }, 
+                                    {
+                                        "name" : "Toppings",
+                                        "type" : "many",
+                                        "options" : [ 
+                                            {
+                                                "name" : "Powder",
+                                                "id" : "XIQaBfKTX",
+                                                "priceImpact" : "0",
+                                                "value" : true,
+                                                "default" : true
+                                            }, 
+                                            {
+                                                "name" : "Almonds",
+                                                "id" : "Auh8SzOfQ",
+                                                "priceImpact" : "50",
+                                                "value" : false,
+                                                "default" : false
+                                            }, 
+                                            {
+                                                "name" : "Marshmallows",
+                                                "id" : "vKp7e$LOY",
+                                                "priceImpact" : "100",
+                                                "value" : false,
+                                                "default" : false
+                                            }
+                                        ],
+                                        "id" : "rk9hn78b3"
+                                    }
+                                ],
                                 "workUnits" : [],
                                 "available" : true,
                                 "category" : "5ufgFQ3xN"
