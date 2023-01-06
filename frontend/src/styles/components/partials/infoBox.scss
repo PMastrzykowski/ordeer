@@ -1,0 +1,16 @@
+.info-box {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    width: 100%;
+    color: $color-1;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    &.success {
+        background: $color-7;
+    }
+    &.fail {
+        background: $color-4;
+    }
+}

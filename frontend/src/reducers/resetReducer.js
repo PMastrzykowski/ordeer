@@ -1,52 +1,51 @@
 const initialState = {
-    status: 'loading', //loading, ready, failed, success
+    status: "loading", //loading, ready, failed, success
     showPassword: false,
     valid: true,
-    id: '',
+    id: "",
     fields: {
-        password: ''
+        password: "",
     },
     errors: {
-        password: ''
-    }
+        password: "",
+    },
 };
 
-export default (state = initialState, action) => {
+export const resetReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'RESET_SET_ID':
+        case "RESET_SET_ID":
             return {
                 ...state,
-                id: action.id
+                id: action.id,
             };
-        case 'RESET_EDIT_FIELD':
+        case "RESET_EDIT_FIELD":
             return {
                 ...state,
                 fields: {
                     ...state.fields,
-                    ...action.payload
-                }
+                    ...action.payload,
+                },
             };
-        case 'RESET_VALIDATE':
+        case "RESET_VALIDATE":
             return {
                 ...state,
                 errors: {
                     ...state.errors,
-                    ...action.payload.errors
+                    ...action.payload.errors,
                 },
-                valid: action.payload.valid
+                valid: action.payload.valid,
             };
-        case 'RESET_SET_STATUS':
+        case "RESET_SET_STATUS":
             return {
                 ...state,
-                status: action.status
+                status: action.status,
             };
-        case 'RESET_TOGGLE_PASSWORD':
+        case "RESET_TOGGLE_PASSWORD":
             return {
                 ...state,
-                showPassword: !state.showPassword
+                showPassword: !state.showPassword,
             };
         default:
             return state;
     }
-}
-
+};

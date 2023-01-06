@@ -1,35 +1,37 @@
-import React from "react";
-import { BrowserRouter as Link, Redirect } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { connect } from "react-redux";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
 import {
     registerEditField,
     registerValidate,
     registerSetStatus,
     registerTogglePassword,
+    registerInitiate,
 } from "../../actions/register";
 import { api } from "../../api";
+import Loader from "../partials/Loader";
 import ReCAPTCHA from "react-google-recaptcha";
-import Loader from '../partials/Loader';
+import { validateEmail } from "../../helpers/utils";
 
-class Register extends React.Component {
-
-    handleInputChange = (e) => {
-        this.props.registerEditField({ [e.target.name]: e.target.value });
+const Register = (props) => {
+    const dispatch = useDispatch();
+    const { register, user } = useSelector((state) => ({
+        register: state.register,
+        user: state.user,
+    }));
+    useEffect(() => {
+        dispatch(registerInitiate());
+    }, []);
+    const handleInputChange = (e) => {
+        dispatch(registerEditField({ [e.target.name]: e.target.value }));
     };
-    secondValidation = () => {
-        if (!this.props.register.valid) {
-            this.frontValidation();
+    const secondValidation = () => {
+        if (!register.valid) {
+            frontValidation();
         }
     };
-    frontValidation = () => {
-        const validateEmail = (email) => {
-            //eslint-disable-next-line
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        };
+    const frontValidation = () => {
         let errors = {
             name: "",
             email: "",
@@ -37,55 +39,46 @@ class Register extends React.Component {
         };
         let valid = true;
         if (
-            this.props.register.fields.name.length === 0 ||
-            this.props.register.fields.name.length > 20
+            register.fields.name.length === 0 ||
+            register.fields.name.length > 20
         ) {
             errors.name = "Name must be 1 - 20 characters long.";
             valid = false;
         }
-        if (!validateEmail(this.props.register.fields.email)) {
+        if (!validateEmail(register.fields.email)) {
             errors.email = "Email is invalid.";
             valid = false;
         }
         if (
-            this.props.register.fields.password.length < 6 ||
-            this.props.register.fields.password.length > 30
+            register.fields.password.length < 6 ||
+            register.fields.password.length > 30
         ) {
             errors.password = "Password must be 6 - 30 characters long.";
             valid = false;
         }
-        this.props.registerValidate(errors, valid);
+        dispatch(registerValidate(errors, valid));
         return valid;
     };
-    handleSubmit = (e) => {
-            e.preventDefault();
-        if (this.frontValidation()) {
-            this.props.registerSetStatus("loading");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (frontValidation()) {
+            dispatch(registerSetStatus("loading"));
             const user = {
-                name: this.props.register.fields.name,
-                email: this.props.register.fields.email,
-                password: this.props.register.fields.password,
+                name: register.fields.name,
+                email: register.fields.email,
+                password: register.fields.password,
             };
-            axios
-                .post(`${api}/api/users/register`, user)
-                .then((res) => {
-                    this.props.registerSetStatus("success");
-                })
-                .catch((err) => {
-                    this.props.registerValidate(err.response.data, true);
-                    this.props.registerSetStatus("ready");
-                });
+            try {
+                await axios.post(`${api}/api/users/register`, user);
+                dispatch(registerSetStatus("success"));
+            } catch (err) {
+                dispatch(registerValidate(err.response.data, true));
+                dispatch(registerSetStatus("ready"));
+            }
         }
     };
-    componentDidMount() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/");
-        } else {
-            this.props.registerSetStatus("ready");
-        }
-    }
-    renderContent = () => {
-        switch (this.props.register.status) {
+    const renderContent = () => {
+        switch (register.status) {
             case "loading":
             case "ready":
                 return (
@@ -94,152 +87,125 @@ class Register extends React.Component {
                             <Link to="/" id="logo">
                                 <div className={"main-logo"} />
                             </Link>
-                            {/* <div className='title' ref={div => this.title = div}>Register</div> */}
+                            <div className="title">Register</div>
                             <div className="description">
                                 Insert your details to register.
                             </div>
-                            <form onSubmit={this.handleSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <div
                                     className={
-                                        this.props.register.errors.name.length >
-                                        0
-                                            ? "error"
-                                            : ""
+                                        register.errors.name.length > 0
+                                            ? "error box-label"
+                                            : "box-label"
                                     }
                                 >
-                                    <label className={`box-label`}>
-                                        Name
+                                    <label>
+                                        <div className="box-label-name">
+                                            Name
+                                        </div>
                                         <input
                                             className={`box-input`}
                                             type="text"
                                             name="name"
-                                            onChange={this.handleInputChange}
-                                            onBlur={this.secondValidation}
-                                            value={
-                                                this.props.register.fields.name
-                                            }
-                                            ref={(div) =>
-                                                (this.nameInput = div)
-                                            }
+                                            onChange={handleInputChange}
+                                            onBlur={secondValidation}
+                                            value={register.fields.name}
                                         />
                                         <div className="error-text">
-                                            {this.props.register.errors.name}
+                                            {register.errors.name}
                                         </div>
                                     </label>
                                 </div>
                                 <div
                                     className={
-                                        this.props.register.errors.email
-                                            .length > 0
-                                            ? "error"
-                                            : ""
+                                        register.errors.email.length > 0
+                                            ? "error box-label"
+                                            : "box-label"
                                     }
                                 >
-                                    <label className={`box-label`}>
-                                        Email
+                                    <label>
+                                        <div className="box-label-name">
+                                            Email
+                                        </div>
                                         <input
                                             className={`box-input`}
                                             type="email"
                                             name="email"
-                                            onChange={this.handleInputChange}
-                                            onBlur={this.secondValidation}
-                                            value={
-                                                this.props.register.fields.email
-                                            }
-                                            ref={(div) =>
-                                                (this.emailInput = div)
-                                            }
+                                            onChange={handleInputChange}
+                                            onBlur={secondValidation}
+                                            value={register.fields.email}
                                         />
                                         <div className="error-text">
-                                            {this.props.register.errors.email}
+                                            {register.errors.email}
                                         </div>
                                     </label>
                                 </div>
                                 <div
                                     className={
-                                        this.props.register.errors.password
-                                            .length > 0
-                                            ? "error"
-                                            : ""
+                                        register.errors.password.length > 0
+                                            ? "error box-label"
+                                            : "box-label"
                                     }
                                 >
-                                    <label className={`box-label`}>
-                                        Password
+                                    <label>
+                                        <div className="box-label-name">
+                                            Password
+                                        </div>
                                         <div className="password-input">
                                             <input
                                                 className={`box-input`}
                                                 type={
-                                                    this.props.register
-                                                        .showPassword
+                                                    register.showPassword
                                                         ? "text"
                                                         : "password"
                                                 }
                                                 name="password"
-                                                onChange={
-                                                    this.handleInputChange
-                                                }
-                                                onBlur={this.secondValidation}
-                                                value={
-                                                    this.props.register.fields
-                                                        .password
-                                                }
-                                                ref={(div) =>
-                                                    (this.passwordInput = div)
-                                                }
+                                                onChange={handleInputChange}
+                                                onBlur={secondValidation}
+                                                value={register.fields.password}
                                             />
                                             <div
                                                 className={`show-password ${
-                                                    this.props.register
-                                                        .showPassword
+                                                    register.showPassword
                                                         ? "visible"
                                                         : ""
                                                 }`}
-                                                onClick={
-                                                    this.props
-                                                        .registerTogglePassword
+                                                onClick={() =>
+                                                    dispatch(
+                                                        registerTogglePassword()
+                                                    )
                                                 }
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={
-                                                        this.props.register
-                                                            .showPassword
-                                                            ? faEye
-                                                            : faEyeSlash
-                                                    }
-                                                    size="lg"
-                                                />
-                                            </div>
+                                            ></div>
                                         </div>
                                         <div className="error-text">
-                                            {
-                                                this.props.register.errors
-                                                    .password
-                                            }
+                                            {register.errors.password}
                                         </div>
                                     </label>
                                 </div>
                                 <ReCAPTCHA
-                                className={'recaptcha'}
+                                    className={"recaptcha"}
                                     sitekey="Your client site key"
-                                    onChange={()=>{}}
+                                    onChange={() => {}}
                                 />
-                                {this.props.register.status === "loading" ? (
-                                    <div className='submit-button login-loader'><Loader /></div>
+                                {register.status === "loading" ? (
+                                    <div className="submit-button login-loader">
+                                        <Loader />
+                                    </div>
                                 ) : (
                                     <button
                                         className="submit-button"
                                         type="submit"
-                                        onClick={this.props.register.status === 'loading' ? null : this.handleSubmit}
-                                        ref={(div) => (this.submit = div)}
+                                        onClick={
+                                            register.status === "loading"
+                                                ? null
+                                                : handleSubmit
+                                        }
                                     >
                                         Register
                                     </button>
                                 )}
                             </form>
-                            <div
-                                className="dont-have-account"
-                                ref={(div) => (this.haveAccount = div)}
-                            >
+                            <div className="dont-have-account">
                                 Have an account already?{" "}
                                 <Link to="/login/">
                                     <span className="link">Log in!</span>
@@ -255,7 +221,7 @@ class Register extends React.Component {
                             <div className="description bigger">
                                 The activation link was sent to your email
                                 address. Click the activation link attached
-                                within <strong>24h</strong>!
+                                within <strong>15 minutes</strong>!
                             </div>
                             <Link to="/">
                                 <button className="submit-button">Back</button>
@@ -267,26 +233,14 @@ class Register extends React.Component {
                 return null;
         }
     };
-    render = () => {
-        return (
-            <>
-                {this.props.auth.isAuthenticated ? (
-                    <Redirect to="/" />
-                ) : (
-                    <>{this.renderContent()}</>
-                )}
-            </>
-        );
-    };
-}
-const mapStateToProps = (state) => ({
-    register: state.register,
-    auth: state.auth,
-});
-const mapDispatchToProps = {
-    registerEditField,
-    registerValidate,
-    registerSetStatus,
-    registerTogglePassword,
+    return (
+        <>
+            {user.isAuthenticated ? (
+                <Navigate to="/" replace={true} />
+            ) : (
+                renderContent()
+            )}
+        </>
+    );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;

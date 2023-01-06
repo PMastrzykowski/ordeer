@@ -1,0 +1,51 @@
+.ball-loader {
+    display: inline-block;
+    position: relative;
+    width: 8px;
+    height: 17px;
+    margin-bottom: 8px;
+    @keyframes ball-loader {
+      0% {
+        top: 0%;
+      }
+      10% {
+        top: 1%;
+      }
+      20% {
+        top: 4%;
+      }
+      30% {
+        top: 9%;
+      }
+      40% {
+        top: 16%;
+      }
+      50% {
+        top: 25%;
+      }
+      60% {
+        top: 36%;
+      }
+      70% {
+        top: 49%;
+      }
+      80% {
+        top: 64%;
+      }
+      90% {
+        top: 81%;
+      }
+      100% {
+        top: 100%;
+      }
+    }
+    div {
+        position: absolute;
+        top: 0px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $color-1;
+        animation: ball-loader 0.4s linear infinite alternate;
+    }
+}

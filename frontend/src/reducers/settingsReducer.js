@@ -1,92 +1,147 @@
 const initialState = {
-    modal: {
-        view: '',
-        isOpen: false,
-        valid: true,
-        status: 'ready',
-        showPassword: false,
-        showCurrentPassword: false,
-        fields: {
-            name: '',
-            email: '',
-            passwordCurrent: '',
-            password: '',
-            code: ''
-        },
-        errors: {
-            name: '',
-            passwordCurrent: '',
-            email: '',
-            password: '',
-            code: ''
-        }
-    }
+    valid: true,
+    showPassword: false,
+    showCurrentPassword: false,
+    status: "ready",
+    view: "edit-email",
+    infoBox: {
+        type: "",
+        text: "",
+    },
+    fields: {
+        name: "",
+        email: "",
+        password: "",
+        passwordCurrent: "",
+        code: "",
+    },
+    errors: {
+        name: "",
+        email: "",
+        password: "",
+        passwordCurrent: "",
+        code: "",
+    },
+    defaults: {
+        name: "",
+        email: "",
+    },
 };
 
-export default (state = initialState, action) => {
+export const settingsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SETTINGS_OPEN_MODAL':
+        case "SETTINGS_EDIT_FIELD":
+            return {
+                ...state,
+                fields: {
+                    ...state.fields,
+                    ...action.payload,
+                },
+            };
+        case "SETTINGS_SET_VIEW":
+            return {
+                ...state,
+                view: action.view,
+            };
+        case "SETTINGS_CHANGE_NAME":
+            return {
+                ...state,
+                status: "ready",
+                infoBox: {
+                    text: "Name changed successfully",
+                    type: "success",
+                },
+                defaults: {
+                    ...state.defaults,
+                    name: action.name,
+                },
+                fields: {
+                    ...state.fields,
+                    name: action.name,
+                },
+            };
+        case "SETTINGS_CHANGE_EMAIL":
             return {
                 ...initialState,
-                modal: {
-                    ...initialState.modal,
-                    view: action.view,
-                    isOpen: true
-                }
+                view: "edit-email",
+                infoBox: {
+                    text: "Email changed successfully",
+                    type: "success",
+                },
+                defaults: {
+                    ...state.defaults,
+                    email: action.email,
+                },
+                fields: {
+                    ...initialState.fields,
+                    email: action.email,
+                },
             };
-        case 'SETTINGS_CLOSE_MODAL':
+        case "LOGIN_LOGIN_USER":
             return {
                 ...state,
-                modal: {
-                    ...state.modal,
-                    isOpen: false
-                }
+                defaults: {
+                    ...state.defaults,
+                    name: action.payload.name,
+                    email: action.payload.email,
+                },
+                fields: {
+                    ...state.fields,
+                    name: action.payload.name,
+                    email: action.payload.email,
+                },
             };
-        case 'SETTINGS_EDIT_FIELD':
+        case "SETTINGS_VALIDATE":
             return {
                 ...state,
-                modal: {
-                    ...state.modal,
-                    fields: {
-                        ...state.modal.fields,
-                        ...action.payload
-                    }
-                }
+                errors: {
+                    ...state.errors,
+                    ...action.payload.errors,
+                },
+                valid: action.payload.valid,
             };
-        case 'SETTINGS_VALIDATE':
+        case "SETTINGS_SET_STATUS":
             return {
                 ...state,
-                modal: {
-                    ...state.modal,
-                    errors: {
-                        ...state.modal.errors,
-                        ...action.payload.errors
-                    },
-                    valid: action.payload.valid
-                }
+                status: action.status,
             };
-        case 'SETTINGS_SET_STATUS':
-            return {
-                ...state,
-                modal: {
-                    ...state.modal,
-                    status: action.status
-                }
-            };
-        case 'LOGOUT_USER':
+        case "LOGOUT_USER":
             return initialState;
-        case 'SETTINGS_TOGGLE_CURRENT_PASSWORD':
+        case "SETTINGS_TOGGLE_CURRENT_PASSWORD":
             return {
                 ...state,
-                showCurrentPassword: !state.showCurrentPassword
+                showCurrentPassword: !state.showCurrentPassword,
             };
-        case 'SETTINGS_TOGGLE_PASSWORD':
+        case "SETTINGS_TOGGLE_PASSWORD":
             return {
                 ...state,
-                showPassword: !state.showPassword
+                showPassword: !state.showPassword,
+            };
+        case "SETTINGS_CLOSE_INFO_BOX":
+            return {
+                ...state,
+                infoBox: initialState.infoBox,
+            };
+        case "SETTINGS_OPEN_INFO_BOX":
+            return {
+                ...state,
+                infoBox: action.payload,
+            };
+        case "SETTINGS_RESET":
+            return {
+                ...initialState,
+                defaults: {
+                    ...initialState.defaults,
+                    name: state.defaults.name,
+                    email: state.defaults.email,
+                },
+                fields: {
+                    ...initialState.fields,
+                    name: state.defaults.name,
+                    email: state.defaults.email,
+                },
             };
         default:
             return state;
     }
-}
-
+};

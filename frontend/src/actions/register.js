@@ -1,4 +1,9 @@
 
+export const registerInitiate = () => {
+    return {
+        type: 'REGISTER_INITIATE'
+    }
+}
 export const registerEditField = payload => {
     return {
         type: 'REGISTER_EDIT_FIELD',

@@ -1,15 +1,15 @@
 const initialState = {
-    status: 'ready'
+    status: "ready",
 };
 
-export default (state = initialState, action) => {
+export const activateReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ACTIVATE_SET_STATUS':
+        case "ACTIVATE_SET_STATUS":
             return {
                 ...state,
-                status: action.status
+                status: action.status,
             };
         default:
             return state;
     }
-}
+};

@@ -14,7 +14,7 @@ const initialState = {
     },
 };
 
-export default (state = initialState, action) => {
+export const registerReducer = (state = initialState, action) => {
     switch (action.type) {
         case "REGISTER_EDIT_FIELD":
             return {
@@ -43,6 +43,8 @@ export default (state = initialState, action) => {
                 ...state,
                 showPassword: !state.showPassword,
             };
+        case "REGISTER_INITIATE":
+        case "LOGIN_LOGIN_USER":
         case "LOGOUT_USER":
             return initialState;
         default:

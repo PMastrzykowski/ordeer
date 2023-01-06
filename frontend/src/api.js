@@ -1,1 +1,1 @@
-export let api = process.env.NODE_ENV === 'production' ? 'https://qrspots.herokuapp.com' :'http://localhost:5005';
+export let api = process.env.NODE_ENV === 'production' ? 'https://qrspots.herokuapp.com' :'http://localhost:5000';

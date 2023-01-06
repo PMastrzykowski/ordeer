@@ -1,373 +1,190 @@
 body,
 html {
     margin: 0;
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
-    //   -webkit-overflow-scrolling: touch;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-body,
-#root,
-#app {
+    padding: 0;
     width: 100%;
     height: 100%;
-    background: $color-1;
-    margin: 0;
     font-family: $font-1;
-    color: $color-7;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    a:link {
-        text-decoration: inherit;
-        color: inherit;
-        cursor: auto;
-        width: inherit;
+    a {
+        color: $color-3;
+        text-decoration: none;
     }
-    a:focus {
-        outline: none;
-    }
-    a:visited {
-        text-decoration: inherit;
-        color: inherit;
-        cursor: auto;
-    }
-    #main-title {
-        width: 100%;
-        padding: 50px 0;
-        border-top: 1px solid $color-4;
-        margin-bottom: 100px;
-        .main-title-inner {
-            margin: 0 auto;
-            width: 90%;
-            max-width: 900px;
-            color: $color-7;
-            font-size: 30px;
-        }
+    .main-logo {
+        margin: 0px auto 10px;
+        width: 212px;
+        height: 82px;
+        background-repeat: no-repeat;
+        background-size: 212px 81px;
+        background-image: url("logo.svg");
     }
 }
-// ::-webkit-scrollbar {
-//   max-width: 10px;
-//   max-height: 10px;
-// }
-
-// /* Track */
-// ::-webkit-scrollbar-track {
-//   background-color: $color-2;
-//   border: 1px solid $color-10;
-// }
-
-// /* Handle */
-// ::-webkit-scrollbar-thumb {
-//   background-color: $color-4;
-// }
-
-input {
-    font-family: $font-1;
-    -webkit-appearance: none;
-}
-.error-wrapper {
-    padding: 20px;
-    .error {
-        font-size: 12px;
-        color: $color-8;
-    }
-}
-.multiple-selection {
+.close {
     @include flexbox();
-    @include flex-wrap(flex-wrap);
-    .selection {
-        @include no-select();
-        padding: 10px;
-        background: $color-1;
-        border-radius: 5px;
-        margin: 10px;
-        transition: all 0.1s ease-in;
-        font-size: 12px;
-        color: $color-5;
-        cursor: pointer;
-        &.active {
-            background: $color-7;
+    @include justify-content(center);
+    @include align-items(center);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    .close-icon {
+        transform: rotate(45deg);
+        width: 20px;
+        height: 20px;
+        background-color: $color-1;
+        -webkit-clip-path: polygon(
+            40% 0,
+            60% 0,
+            60% 40%,
+            100% 40%,
+            100% 60%,
+            60% 60%,
+            60% 100%,
+            40% 100%,
+            40% 60%,
+            0 60%,
+            0 40%,
+            40% 40%
+        );
+        clip-path: polygon(
+            40% 0,
+            60% 0,
+            60% 40%,
+            100% 40%,
+            100% 60%,
+            60% 60%,
+            60% 100%,
+            40% 100%,
+            40% 60%,
+            0 60%,
+            0 40%,
+            40% 40%
+        );
+    }
+}
+button,
+.button {
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 1px solid $color-3;
+    box-sizing: border-box;
+    background-color: $color-3;
+    color: $color-1;
+    transition: $transition-1;
+    .value {
+        @include button-value-animation;
+    }
+    &.contrast,
+    &.full,
+    &.disabled,
+    &.empty {
+        min-width: 140px;
+        min-height: 50px;
+    }
+    &.full{
+        &.danger{
+            background-color: $color-4;
+            border: 1px solid $color-4;
+        }
+    }
+    &.loading {
+        cursor: wait;
+    }
+    &.disabled {
+        cursor: not-allowed;
+        border: 1px solid $color-5;
+        background-color: $color-5;
+        color: $color-6;
+    }
+    &.contrast {
+        border: 1px solid $color-1;
+        background-color: $color-1;
+        color: $color-3;
+    }
+    &.empty {
+        background-color: $color-1;
+        color: $color-3;
+        &.contrast {
+            border: 1px solid $color-1;
+            background-color: $color-3;
             color: $color-1;
-            transform: scale(1.1);
         }
     }
 }
-
+.submit-button {
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+    width: 100%;
+    min-height: 45px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 20px 0 10px 0;
+    color: $color-1;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border: 1px solid $color-3;
+    background-color: $color-3;
+}
 .box-label {
-    text-transform: uppercase;
-    font-size: 10px;
-    color: $color-5;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: $color-2;
     width: 100%;
     .required {
-        color: $color-8;
+        color: $color-4;
         font-size: 16px;
     }
     .optional {
-        color: $color-5;
+        color: $color-2;
+    }
+    .box-label-name {
+        margin-bottom: 10px;
+        margin-left: 10px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 }
 .box-input {
     outline: none;
     width: 100%;
     box-sizing: border-box;
-    padding: 10px 0;
+    padding: 10px;
     background: none;
     box-shadow: none;
-    border-width: 0 0 1px 0;
+    border-width: 1px;
     border-style: solid;
-    border-color: $color-10;
+    border-radius: 5px;
+    border-color: $color-5;
     font-size: 14px;
     transition: border-color 0.1s ease-in;
     &:focus {
-        border-color: $color-5;
+        border-color: $color-3;
     }
 }
 .error {
+    .box-label-name{
+        color: $color-4;
+    }
     label {
         input {
-            border-color: $color-21;
+            border-color: $color-4;
             &:focus {
-                border-color: $color-8;
-            }
-        }
-        .select__control {
-            border-color: $color-21 !important;
-            &.css-1pahdxg-control {
-                border-color: $color-8 !important;
-                &:hover {
-                    border-color: $color-8 !important;
-                }
-                &:focus {
-                    border-color: $color-8 !important;
-                }
+                border-color: $color-4;
             }
         }
     }
     .error-text {
         text-transform: none;
-        color: $color-8;
-    }
-}
-
-.personal-form,
-.tax-form {
-    margin: 20px 0;
-    transition: all 0.5s;
-    .section {
-        margin: 5px 0;
-        box-sizing: border-box;
-    }
-    &.submitting {
-        opacity: 0.5;
-    }
-    &.saved {
-        .box-input {
-            border-color: $color-1;
-            text-transform: none;
-            color: $color-11;
-        }
-    }
-}
-.stripe-manager-card-form {
-    .row {
-        &.lower {
-            @include flexbox;
-            @include justify-content(space-between);
-            .section {
-                width: 45%;
-            }
-        }
-    }
-    input,
-    .StripeElement {
-        outline: none;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 10px 0;
-        background: none;
-        box-shadow: none;
-        border-width: 0 0 1px 0;
-        border-style: solid;
-        border-color: $color-10;
-        font-size: 14px;
-        transition: border-color 0.1s ease-in;
-        &:focus,
-        &.StripeElement--focus {
-            border-color: $color-5;
-        }
-    }
-    .error {
-        label {
-            input,
-            .StripeElement {
-                border-color: $color-21;
-                &:focus,
-                &.StripeElement--focus {
-                    border-color: $color-8;
-                }
-            }
-        }
-    }
-}
-button {
-    outline: none;
-    border: none;
-    cursor: pointer;
-    &.top-button {
-        padding: 20px 40px;
+        color: $color-4;
         font-size: 12px;
-        border: 1px solid $color-5;
-        color: $color-5;
-        border-radius: 5px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
     }
-}
-h1 {
-    font-size: 20px;
-    color: $color-7;
-}
-h2 {
-    font-size: 18px;
-    color: $color-7;
-}
-h3 {
-    font-size: 15px;
-    color: $color-7;
-}
-p {
-    font-size: 14px;
-    color: $color-11;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    thead {
-        border-bottom: 1px solid $color-5;
-    }
-    tbody {
-        tr {
-            border-bottom: 1px solid $color-10;
-        }
-    }
-    th,
-    td {
-        text-align: left;
-        padding: 20px;
-    }
-}
-
-.password-input {
-    position: relative;
-    input {
-        padding-right: 40px;
-    }
-    .show-password {
-        @include flexbox();
-        @include justify-content(center);
-        @include align-items(center);
-        cursor: pointer;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        width: 40px;
-        height: 100%;
-        &.visible {
-            color: $color-11;
-        }
-    }
-}
-.info-box {
-    padding: 20px;
-    border-radius: 5px;
-    background-color: $color-17-light;
-    border: 1px solid $color-17;
-    button {
-        margin-top: 10px;
-        border-radius: 5px;
-        padding: 20px;
-        background-color: $color-17;
-        border: none;
-    }
-    .blue {
-        background-color: $color-17;
-        border-color: $color-16;
-    }
-}
-
-.select__control {
-    background-color: transparent !important;
-    border-radius: 0px !important;
-    border-width: 0 0 1px 0 !important;
-    border-color: $color-10 !important;
-    transition: border-color 0.1s ease-in;
-    &.css-1pahdxg-control {
-        border-width: 0 0 1px 0 !important;
-        border-color: $color-5 !important;
-        box-shadow: none !important;
-        transition: border-color 0.1s ease-in;
-        &:hover {
-            border-color: $color-5 !important;
-        }
-        &:focus {
-            border-width: 0 0 1px 0 !important;
-            border-color: $color-10 !important;
-            box-shadow: none !important;
-        }
-    }
-    .select__value-container {
-        padding-left: 0 !important;
-        text-transform: none !important;
-        .select__single-value {
-            color: black !important;
-            font-size: 14px;
-        }
-        .select__input {
-            width: 100%;
-            color: black !important;
-            font-size: 14px;
-        }
-    }
-    .select__input {
-        color: $color-5 !important;
-    }
-    .select__indicator-separator {
-        opacity: 0 !important;
-    }
-    .select__indicator {
-        color: $color-5 !important;
-    }
-}
-.css-26l3qy-menu {
-    border-radius: 0 !important;
-    text-transform: none !important;
-    .select__option {
-        color: $color-5 !important;
-        font-size: 16px !important;
-        &.select__option--is-focused {
-            background-color: $color-10 !important;
-        }
-        &.select__option--is-selected {
-            background-color: $color-10 !important;
-        }
-    }
-}
-.select__multi-value__remove .css-6q0nyr-Svg {
-    fill: $color-5 !important;
-}
-.select__menu {
-    border-radius: 4px !important;
-    box-shadow: $shadow-7 !important;
-}
-.slick-slide div {
-    outline: none;
-}
-.slick-dots li.slick-active button:before {
-    color: $color-7 !important;
 }

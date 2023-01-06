@@ -1,0 +1,59 @@
+.settings {
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+    .setting {
+        width: 100%;
+        border-width: 0 0 1px;
+        border-style: solid;
+        border-color: $color-5;
+        padding: 40px;
+        @include flexbox();
+        @include align-items(center);
+        @include justify-content(space-between);
+        cursor: pointer;
+        box-sizing: border-box;
+        color: $color-6;
+        transition: $transition-1;
+        &:hover {
+            color: $color-2;
+            .setting-right {
+                .chevron {
+                    background: $color-2;
+                }
+            }
+        }
+        .setting-label {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .setting-value {
+            font-size: 12px;
+        }
+        .setting-right {
+            .chevron {
+                width: 10px;
+                height: 10px;
+                background: $color-6;
+            }
+        }
+    }
+    .details {
+        form {
+            margin-top: 50px;
+            .info{
+                margin-bottom: 50px;
+            }
+            .buttons-wrapper {
+                @include flexbox();
+                @include align-items(center);
+                @include justify-content(flex-end);
+                margin-top: 100px;
+                button {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

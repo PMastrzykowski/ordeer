@@ -1,0 +1,80 @@
+.dropdown-menu {
+    .dropdown-label {
+        @include flexbox();
+        @include align-items(center);
+        padding: 20px;
+        position: relative;
+        width: fit-content;
+        cursor: pointer;
+        &:hover {
+            .dropdown-name {
+                color: $color-2;
+            }
+            .dropdown-chevron-icon
+            .chevron{
+                background: $color-2;
+            }
+            .dropdown-options-wrapper {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0px);
+                visibility: visible;
+            }
+        }
+        .dropdown-name {
+            font-size: 14px;
+            margin-right: 10px;
+            color: $color-6;
+            transition: $transition-1;
+        }
+        .dropdown-chevron-icon {
+            @include flexbox();
+            @include align-items(center);
+            @include justify-content(center);
+            height: 40px;
+            width: 20px;
+            .chevron{
+                background: $color-6;
+                transition: $transition-1;
+            }
+        }
+        .dropdown-options-wrapper {
+            visibility: hidden;
+            opacity: 0;
+            box-shadow: $shadow-1;
+            position: absolute;
+            top: calc(100%);
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            transition: $transition-1;
+            border-radius: 5px;
+            ul {
+                position: relative;
+                padding: 0;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: -48px;
+                    left: calc(50% - 24px);
+                    width: 0;
+                    height: 0;
+                    border-left: 24px solid transparent;
+                    border-right: 24px solid transparent;
+                    border-bottom: 12px solid $color-1;
+                    padding: 10px 0;
+                }
+                li {
+                    padding: 15px 30px;
+                    font-size: 14px;
+                    white-space: nowrap;
+                    cursor: pointer;
+                    transition: $transition-1;
+                    color: $color-6;
+                    list-style: none;
+                    &:hover{
+                        color: $color-2;
+                    }
+                }
+            }
+        }
+    }
+}

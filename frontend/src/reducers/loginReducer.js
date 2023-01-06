@@ -1,5 +1,6 @@
 const initialState = {
     valid: true,
+    accessToken: "",
     status: "ready", //forgot status
     showPassword: false,
     fields: {
@@ -12,7 +13,7 @@ const initialState = {
     },
 };
 
-export default (state = initialState, action) => {
+export const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case "LOGIN_EDIT_FIELD":
             return {
@@ -41,6 +42,7 @@ export default (state = initialState, action) => {
                 ...state,
                 showPassword: !state.showPassword,
             };
+        case "LOGIN_LOGIN_USER":
         case "LOGOUT_USER":
             return initialState;
         default:

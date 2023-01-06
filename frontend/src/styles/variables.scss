@@ -1,87 +1,20 @@
-// biel
+// COLORS
+// White
 $color-1: #ffffff;
-// czerń
-$color-11: #000000;
+// Black
+$color-2: #000000;
+// Theme colors
+$color-3: #1C4586;
+$color-4: #E65F5F;
+$color-5: #E3E3E3;
+$color-6: #7C7C7C;
+$color-7: #5FC391;
 
-//zielony przenikający
-$color-2-light: #eff4f5d0;
-// zielony bardzo jasny
-$color-2: #eff4f5;
-// zielony średni
-$color-9: #d3e1e3;
-// zielony średni 2
-$color-10: #85a8af;
-// zielony ciemny
-$color-7: #537981;
-
-// szary ciemny
-$color-5: #939090;
-// szary śreni
-$color-4: #e3eaeb; //font color
-// szary bardzo jasny
-$color-3: #f8f8f8;
-
-//czerwień error, alert
-$color-8: #AF4646;
-//jasna czerwień
-$color-21: #e09eb0;
-
-//ciemny zolty
-$color-16: #a98101;
-//sredni zolty
-$color-6: #ffc400; //main yellow
- //jasny zolty
-$color-17: #ffe284;
-//bardzo jasny zolty
-
-// zielony 
-$color-22: #6BA563;
-
-$color-17-light: rgba(255, 229, 142, 0.1);
- //niebieski
-$color-7-light: rgba(105, 174, 211, 0.1);
-
-
-
-// $font-1: "Lato", sans-serif;
+// FONTS
 $font-1: "Sen", sans-serif;
 
-//Cień do logowania
-$shadow-9: 30px 30px 50px rgba(0, 0, 0, 0.04), -30px -30px 50px rgba(255, 255, 255, 0.5),
-  inset 10px 10px 10px rgba(0, 0, 0, 0.001), inset -10px -10px 10px rgba(255, 255, 255, 0.001);
-//Cień przycisku logowania
-$shadow-2: 5px 5px 5px rgba(0, 0, 0, 0.05), -5px -5px 5px rgba(255, 255, 255, 0.5);
-//Cień menu
-$shadow-4: 0 10px 20px rgba(0, 0, 0, 0.15);
-//Switch dott
-$shadow-5: 1px 1px 1px rgba(0, 0, 0, 0.1);
-$shadow-5-inset: inset 1px 1px 1px rgba(0, 0, 0, 0.1);
+// SHADOWS
+$shadow-1: 0px 0px 20px rgba(0, 0, 0, 0.05);
 
-//Cień modalu
-$shadow-6: 0px 0px 10px rgba(0, 0, 0, 0.02);
-
-//Cien modalu statusu zamowienia
-$shadow-7: 0px 0px 20px rgba(0, 0, 0, 0.09);
-// //Selection
-// $selection-border-color: $color-theme-main;
-// $selection-fill-rotation-handle-color: $color-white;
-// $selection-fill-handle-color: $color-white;
-// $selection-fill-handle-hover-color: $color-theme-main;
-// $selection-border-width: 1;
-// $selection-resize-handle-size: 9;
-// $selection-rotation-handle-size: 7;
-// $selection-resize-offset: ($selection-resize-handle-size + $selection-border-width)/2;
-// $selection-rotation-offset: ($selection-rotation-handle-size + $selection-border-width)/2;
-
-// //Layout
-// $canvas-background: $color-gray-1;
-// $layout-borders: $color-gray-2;
-// $header-background: $color-white;
-// $left-pane-background: $color-white;
-// $right-pane-background: $color-white;
-
-// //Statistics
-// $marker-scroll-color: 22;
-// $marker-click-color: $color-19;
-// $marker-navigation-color: $color-6;
-// $marker-state-color: $color-8;
+// TRANSITIONS
+$transition-1: all 0.2s;

@@ -1,43 +1,56 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { connect } from "react-redux";
-import { loginUser } from "../../actions/login";
+import { useDispatch, useSelector } from "react-redux";
 import { activateSetStatus } from "../../actions/activate";
 import { api } from "../../api";
+import Loader from "../partials/Loader";
 
-class Activate extends React.Component {
-    componentDidMount = () => {
-        let locationSplit = this.props.location.pathname.split("/");
+const Activate = (props) => {
+    const dispatch = useDispatch();
+    const { activate, user } = useSelector((state) => ({
+        activate: state.activate,
+        user: state.user,
+    }));
+    useEffect(() => {
+        let locationSplit = props.location.pathname.split("/");
         let id;
         if (locationSplit.length < 3) {
-            this.props.activateSetStatus("fail");
+            dispatch(activateSetStatus("fail"));
         } else {
             id = locationSplit[2];
-            axios
-                .post(`${api}/api/users/activate`, { id })
-                .then((res) => {
+            const activateUser = async () => {
+                try {
+                    const res = await axios.post(`${api}/api/users/activate`, {
+                        id,
+                    });
                     if (res.data.success) {
-                        this.props.loginUser(res.data.token);
-                        this.props.history.push("/");
+                        dispatch(activateSetStatus("success"));
                     } else {
-                        this.props.activateSetStatus("fail");
+                        dispatch(activateSetStatus("fail"));
                     }
-                })
-                .catch((err) => {
-                    this.props.activateSetStatus("fail");
-                });
+                } catch (err) {
+                    dispatch(activateSetStatus("fail"));
+                }
+            };
+            activateUser();
         }
-    };
-    renderContent = () => {
-        switch (this.props.activate.status) {
+    }, []);
+    const renderContent = () => {
+        switch (activate.status) {
             case "loading":
-                return <div>Loading</div>;
+                return (
+                    <div className="auth loading">
+                        <Loader />
+                    </div>
+                );
             case "fail":
-            case "success":
                 return (
                     <div className="auth">
                         <div className="auth-inner">
+                            <Link to="/" id="logo">
+                                <div className={"main-logo"} />
+                            </Link>
                             <div className="description bigger">
                                 Activation link is invalid.
                             </div>
@@ -47,22 +60,34 @@ class Activate extends React.Component {
                         </div>
                     </div>
                 );
+            case "success":
+                return (
+                    <div className="auth">
+                        <div className="auth-inner">
+                            <Link to="/" id="logo">
+                                <div className={"main-logo"} />
+                            </Link>
+                            <div className="description bigger">
+                                Activation successfull! You can log in now.
+                            </div>
+                            <Link to="/login">
+                                <button className="submit-button">Login</button>
+                            </Link>
+                        </div>
+                    </div>
+                );
             default:
                 return null;
         }
     };
-    render = () => {
-        return <>{this.renderContent()}</>;
-    };
-}
-const mapStateToProps = (state) => ({
-    activate: state.activate,
-});
-const mapDispatchToProps = {
-    loginUser,
-    activateSetStatus,
+    return (
+        <>
+            {user.isAuthenticated ? (
+                <Navigate to="/" replace={true} />
+            ) : (
+                renderContent()
+            )}
+        </>
+    );
 };
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(Activate));
+export default Activate;

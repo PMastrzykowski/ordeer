@@ -1,36 +1,21 @@
-// @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 @import "./variables.scss";
 @import "./mixins.scss";
 @import "./app.scss";
 
+//Components
+@import "./components/landing.scss";
+
+//Profile
+@import "./components/profile/settings.scss";
+
 //Auth
-@import "./auth/auth.scss";
-
-//General
-@import "./general/landing.scss";
-
-//Client
-//New order
-@import './client/new_order/new-order.scss';
-@import './client/new_order/fresh-new-order.scss';
-@import "./client/new_order/features/feature-0.scss";
-@import "./client/new_order/features/feature-2.scss";
-
-//Manager
-@import "./manager/settings.scss";
-@import "./manager/dashboard.scss";
-@import "./manager/users.scss";
-@import "./manager/plans.scss";
-@import "./manager/navbar.scss";
-@import "./manager/footer.scss";
-
+@import "./components/auth/auth.scss";
 //Partials
-@import "./partials/modal.scss";
-@import "./partials/loader.scss";
-@import "./partials/switch.scss";
-
-//Externals
-$slick-font-path: "~slick-carousel/slick/fonts/";
-$slick-loader-path: "~slick-carousel/slick/";
-
-@import '~slick-carousel/slick/slick', '~slick-carousel/slick/slick-theme';
+// @import "./partials/modal.scss";
+@import "./components/partials/loader.scss";
+@import "./components/partials/infoBox.scss";
+@import "./components/partials/path.scss";
+@import "./components/partials/chevron.scss";
+@import "./components/partials/dropdownMenu.scss";
+@import "./components/partials/navbar.scss";
+// @import "./partials/switch.scss";

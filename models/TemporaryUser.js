@@ -25,7 +25,7 @@ const TemporaryUserSchema = new Schema({
     },
     createdAt: { 
         type: Date, 
-        expires: '24h',
+        expires: '15m',
         default: Date.now
     }
 });

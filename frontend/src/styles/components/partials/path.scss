@@ -1,0 +1,28 @@
+.path {
+    width: 100%;
+    @include flexbox();
+    @include flex-wrap(wrap);
+    @include align-items(center);
+    @include no-select();
+    margin-bottom: 50px;
+    .path-inner {
+        @include flexbox();
+        @include flex-wrap(wrap);
+        @include align-items(center);
+        .path-segment {
+            font-size: 12px;
+            white-space: nowrap;
+            color: $color-6;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: $transition-1;
+            &:hover{
+                color: $color-2;
+            }
+        }
+        .slash {
+            margin: 0 10px;
+            color: $color-5;
+        }
+    }
+}

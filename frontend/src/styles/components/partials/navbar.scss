@@ -1,0 +1,32 @@
+.profile{
+    max-width: 1100px;
+    margin: 0px auto;
+    width: 100%;
+    .navbar{
+        @include flexbox();
+        @include align-items(center);
+        @include justify-content(space-between);
+        padding: 50px 0;
+        width:100%;
+        .navbar-right{
+            @include flexbox();
+        }
+        .navbar-button{
+            border: none;
+            background: none;
+            color: $color-6;
+            padding: 20px;
+            margin: 0 10px;
+            height:100%;
+            transition: $transition-1;
+            &:hover{
+                color: $color-2;
+            }
+        }
+        .navbar-button-active{
+            .navbar-button{
+                color: $color-3;
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+.landing{
+    @include flexbox();
+    width: 100vw;
+    height: 100vh;
+    .landing-left, .landing-right{
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+        @include flex-direction(column);
+        width: 50%;
+    }
+    .landing-right{
+        background: $color-3;
+        button{
+            width: 90%;
+            min-width: 300px;
+        }
+    }
+}
