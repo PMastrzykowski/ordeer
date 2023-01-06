@@ -753,9 +753,24 @@
                     position: fixed;
                     bottom: 10px;
                     left: 10px;
-                    padding: 20px 10px 10px;
+                    padding: 20px 15px 15px;
                     box-sizing: border-box;
                     z-index: 200;
+                    .instruction{
+                        margin-bottom: 20px;
+                        font-size: 14px;
+                        text-align: center;
+                        padding: 0 50px;
+                    }
+                    .box-label{
+                        color: $color-11;
+                        .box-input{
+                            border-color:$color-5;
+                            &:focus{
+                                border-color:$color-11;
+                            }
+                        }
+                    }
                     .total-label {
                         width: 100%;
                         font-size: 12px;
@@ -763,6 +778,7 @@
                         text-transform: uppercase;
                         letter-spacing: 2px;
                         font-weight: 300;
+                        margin-top: 30px;
                     }
                     .total-amount {
                         font-weight: 700;

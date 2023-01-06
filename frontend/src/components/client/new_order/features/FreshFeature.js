@@ -15,6 +15,8 @@ import {
     newOrderRemoveCartItem,
     newOrderOpenPaymentModal,
     newOrderClosePaymentModal,
+    newOrderEditField,
+    newOrderValidate
 } from "../../../../actions/newOrder";
 import { Link } from "react-router-dom";
 import OptionMany from "./feature-partials/OptionMany";
@@ -78,6 +80,31 @@ class FreshFeature extends React.Component {
                 return;
         }
     };
+    handleInputChange = (e) => {
+        this.props.newOrderEditField({ [e.target.name]: e.target.value })
+    }
+    secondValidation = () => {
+        if (!this.props.newOrder.valid) {
+            this.frontValidation()
+        }
+    }
+    frontValidation = () => {
+        const validateEmail = (email) => {
+            //eslint-disable-next-line
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        let errors = {
+            email: '',
+        };
+        let valid = true;
+        if (!validateEmail(this.props.newOrder.fields.email)) {
+            errors.email = 'Email is invalid.';
+            valid = false;
+        }
+        this.props.newOrderValidate(errors, valid);
+        return valid;
+    }
     viewHi = () => (
         <Div100vh>
             <div id="view-hi" className={this.props.start ? "start" : ""}>
@@ -219,6 +246,7 @@ class FreshFeature extends React.Component {
                             }
                             onClick={() => {
                                 this.props.selectCategory(category.id);
+                                console.log('start scroll')
                                 animateScrollTo(
                                     this[`category-${categoryIndex}`],
                                     {
@@ -228,6 +256,7 @@ class FreshFeature extends React.Component {
                                         maxDuration: 1000,
                                     }
                                 );
+                                console.log('stop scroll')
                             }}
                             key={categoryIndex}
                         >
@@ -638,6 +667,39 @@ class FreshFeature extends React.Component {
                             onClick={this.props.newOrderClosePaymentModal}
                         ></div>
                         <div className={"payment-modal-body"}>
+                            <div className="instruction">We need your data only to send you confirmation and receipt.</div>
+                        <div className={this.props.newOrder.errors.email.length > 0 ? 'error' : ''}>
+                                <label className={`box-label`}>
+                                    Name
+                                <input
+                                        className={`box-input`}
+                                        type="email"
+                                        name="name"
+                                        onChange={this.handleInputChange}
+                                        onBlur={this.secondValidation}
+                                        value={this.props.newOrder.fields.name}
+                                        ref={div => this.nameInput = div}
+                                    />
+
+                                    <div className='error-text'>{this.props.newOrder.errors.email}</div>
+                                </label>
+                            </div>
+                            <div className={this.props.newOrder.errors.email.length > 0 ? 'error' : ''}>
+                                <label className={`box-label`}>
+                                    Email
+                                <input
+                                        className={`box-input`}
+                                        type="email"
+                                        name="email"
+                                        onChange={this.handleInputChange}
+                                        onBlur={this.secondValidation}
+                                        value={this.props.newOrder.fields.email}
+                                        ref={div => this.emailInput = div}
+                                    />
+
+                                    <div className='error-text'>{this.props.newOrder.errors.email}</div>
+                                </label>
+                            </div>
                             <div className={"total-label"}>Total</div>
                             <div className={"total-amount"}>
                                 {currency(
@@ -656,72 +718,37 @@ class FreshFeature extends React.Component {
             </div>
         );
     };
-    viewPayment = () => (
-        <div id={`view-payment`}>
-            <div className={`view-payment-body`}>
-                <div
-                    className={`amount`}
-                    ref={(div) => (this.view2amount = div)}
-                >
-                    {currency(
-                        calculateTotal(this.props.newOrder.cart),
-                        currencyOptions(this.props.newOrder.currency)
-                    ).format()}
-                </div>
-                <div className={`payment-buttons`}>
-                    <Elements stripe={stripe}>
-                        <PaymentButton />
-                    </Elements>
-                    {/* <div
-                        className={`payment-button apple`}
-                        ref={(div) => (this.view2apple = div)}
-                    >
-                        <div className={`icon`} />
-                    </div>
-                    {!this.props.newOrder.isInTestMode ? (
-                        <div
-                            className={`payment-button p24`}
-                            ref={(div) => (this.view2p24 = div)}
-                            onClick={this.openP24}
-                        >
-                            <div className={`icon`} />
-                        </div>
-                    ) : null}
-                    <div
-                        className={`payment-button google`}
-                        ref={(div) => (this.view2google = div)}
-                    >
-                        <div className={`icon`} />
-                    </div> */}
-                    {/* <div
-                            className={`payment-button card`}
-                            ref={(div) => (this.view2card = div)}
-                            onClick={this.open3}
-                        >
-                            <div className={`icon`} />
-                        </div> */}
-                    {/* <div
-                            className={`payment-button cash`}
-                            ref={(div) => (this.view2cash = div)}
-                            onClick={this.openCash}
-                        >
-                            Cash
-                        </div> */}
-                </div>
-            </div>
-            <div className={`header`}>
-                <Link
-                    to={() =>
-                        `/neworder/${this.props.match.params.place}/${this.props.match.params.id}/cart`
-                    }
-                >
-                    <div className={`items-back`}>
-                        <div className={`back-icon`} />
-                    </div>
-                </Link>
-            </div>
-        </div>
-    );
+    // viewPayment = () => (
+    //     <div id={`view-payment`}>
+    //         <div className={`view-payment-body`}>
+    //             <div
+    //                 className={`amount`}
+    //                 ref={(div) => (this.view2amount = div)}
+    //             >
+    //                 {currency(
+    //                     calculateTotal(this.props.newOrder.cart),
+    //                     currencyOptions(this.props.newOrder.currency)
+    //                 ).format()}
+    //             </div>
+    //             <div className={`payment-buttons`}>
+    //                 <Elements stripe={stripe}>
+    //                     <PaymentButton />
+    //                 </Elements>
+    //             </div>
+    //         </div>
+    //         <div className={`header`}>
+    //             <Link
+    //                 to={() =>
+    //                     `/neworder/${this.props.match.params.place}/${this.props.match.params.id}/cart`
+    //                 }
+    //             >
+    //                 <div className={`items-back`}>
+    //                     <div className={`back-icon`} />
+    //                 </div>
+    //             </Link>
+    //         </div>
+    //     </div>
+    // );
     render = () => {
         switch (this.props.contentType) {
             case "menu":
@@ -759,6 +786,8 @@ const mapDispatchToProps = (dispatch) =>
             newOrderRemoveCartItem,
             newOrderOpenPaymentModal,
             newOrderClosePaymentModal,
+            newOrderEditField,
+            newOrderValidate
         },
         dispatch
     );

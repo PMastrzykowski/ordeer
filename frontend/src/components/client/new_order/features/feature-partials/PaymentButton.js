@@ -4,101 +4,123 @@ import {
     useStripe,
     useElements,
 } from "@stripe/react-stripe-js";
-import axios from 'axios';
+import axios from "axios";
 import StatusMessages, { useMessages } from "./StatusMessages";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import {
     newOrderStartPaying,
     newOrderStopPaying,
 } from "../../../../../actions/newOrder";
 
-
 const PaymentButton = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const newOrder = useSelector((state) => state.newOrder)
+    const newOrder = useSelector((state) => state.newOrder);
     const [paymentRequest, setPaymentRequest] = useState(null);
     const [messages, addMessage] = useMessages();
-    const clickPay=()=>{
-      axios
-          .post(`/api/menu/checkbeforepayment`, {menuId: newOrder.placeMenu._id, cart: newOrder.cart})
-          .then((res) => {
-              if (res.data.success) {
-              } else {
-                  console.log(res.data);
-              }
-          })
-          .catch((err) => {});
-          return
-    }
-    useEffect(() => {
-        if (!stripe || !elements) {
+
+    const checkTotalAmount = () => {
+        axios
+            .post(`/api/menu/checkbeforepayment`, {
+                menuId: newOrder.placeMenu._id,
+                cart: newOrder.cart,
+            })
+            .then((res) => {
+                if (res.data.success) {
+                    return res.data;
+                } else {
+                    return {
+                        error: "The total amount check could not be performed.",
+                    };
+                }
+            })
+            .catch((err) => {
+                return err;
+            });
+    };
+    const handleOrderWithoutPayment = async () => {
+        const totalData = await checkTotalAmount();
+        if (!totalData.success) {
             return;
         }
-        // this.props.newOrderStartPaying();
-        const pr = stripe.paymentRequest({
-            country: "US",
-            currency: "usd",
-            total: {
-                label: "Demo total",
-                amount: 1999,
-            },
-            requestPayerName: true,
-            requestPayerEmail: true,
-        });
-
-        // Check the availability of the Payment Request API.
-        pr.canMakePayment().then((result) => {
-            if (result) {
-                setPaymentRequest(pr);
+    };
+    useEffect(() => {
+        async function placerOrder() {
+            if (!stripe || !elements) {
+                return;
             }
-        });
+            const totalData = await checkTotalAmount();
+            if (!totalData.success) {
+                return;
+            }
+            // this.props.newOrderStartPaying();
+            const pr = stripe.paymentRequest({
+                country: "ES",
+                currency: totalData.currency,
+                total: {
+                    label: "Order",
+                    amount: totalData.total,
+                },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
 
-        pr.on("paymentmethod", async (e) => {
-            const { error: backendError, clientSecret } = await fetch(
-                "/create-payment-intent",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        paymentMethodType: "card",
-                        currency: "usd",
-                    }),
+            // Check the availability of the Payment Request API.
+            pr.canMakePayment().then((result) => {
+                if (result) {
+                    setPaymentRequest(pr);
                 }
-            ).then((r) => r.json());
+            });
 
-            if (backendError) {
-                addMessage(backendError.message);
-                return;
-            }
-
-            addMessage("Client secret returned");
-
-            const { error: stripeError, paymentIntent } =
-                await stripe.confirmCardPayment(
-                    clientSecret,
+            pr.on("paymentmethod", async (e) => {
+                const { error: backendError, clientSecret } = await fetch(
+                    "/create-payment-intent",
                     {
-                        payment_method: e.paymentMethod.id,
-                    },
-                    { handleActions: false }
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            paymentMethodType: "card",
+                            currency: "usd",
+                        }),
+                    }
+                ).then((r) => r.json());
+
+                if (backendError) {
+                    addMessage(backendError.message);
+                    return;
+                }
+
+                addMessage("Client secret returned");
+
+                const { error: stripeError, paymentIntent } =
+                    await stripe.confirmCardPayment(
+                        clientSecret,
+                        {
+                            payment_method: e.paymentMethod.id,
+                        },
+                        { handleActions: false }
+                    );
+
+                if (stripeError) {
+                    // Show error to your customer (e.g., insufficient funds)
+                    addMessage(stripeError.message);
+                    return;
+                }
+
+                // Show a success message to your customer
+                // There's a risk of the customer closing the window before callback
+                // execution. Set up a webhook or plugin to listen for the
+                // payment_intent.succeeded event that handles any business critical
+                // post-payment actions.
+                addMessage(
+                    `Payment ${paymentIntent.status}: ${paymentIntent.id}`
                 );
-
-            if (stripeError) {
-                // Show error to your customer (e.g., insufficient funds)
-                addMessage(stripeError.message);
-                return;
-            }
-
-            // Show a success message to your customer
-            // There's a risk of the customer closing the window before callback
-            // execution. Set up a webhook or plugin to listen for the
-            // payment_intent.succeeded event that handles any business critical
-            // post-payment actions.
-            addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
-        });
+            });
+        }
+        placerOrder();
     }, [stripe, elements, addMessage]);
 
     return (
@@ -116,11 +138,11 @@ const PaymentButton = () => {
                     }}
                 />
             ) : (
-                <button className={"order-now"} onClick={clickPay}>Order now</button>
+                <button className={"order-now"}>Order now</button>
             )}
 
             <StatusMessages messages={messages} />
         </>
     );
 };
-export default PaymentButton
+export default PaymentButton;

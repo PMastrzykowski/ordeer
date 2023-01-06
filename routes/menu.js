@@ -284,7 +284,6 @@ router.post(
                     });
             })
             .catch((err) => {
-                console.log(3);
                 return res.status(404).json(err);
             });
     }
@@ -452,18 +451,18 @@ router.post("/checkbeforepayment", (req, res) => {
                             multipliedPrice
                         );
                     });
-                    return res.json({ success: true, total });
+                    return res.json({ success: true, total, currency: user.currency });
                 })
                 .catch((err) => {
                     console.error("There was an error", err);
                     return res
                         .status(400)
-                        .json({ error: "User was not found." });
+                        .json({ success: false, error: "User was not found." });
                 });
         })
         .catch((err) => {
             console.error("There was an error", err);
-            return res.status(400).json({ error: "Menu was not found." });
+            return res.status(400).json({ success: true, error: "Menu was not found." });
         });
 });
 

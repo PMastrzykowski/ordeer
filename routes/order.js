@@ -73,7 +73,6 @@ router.post("/refundorder", (req, res) => {
     User.findOne({ _id: placeId })
         .then((user) => {
             if (!user) {
-                console.log(1);
                 res.json({
                     success: false,
                     errors,
@@ -82,12 +81,9 @@ router.post("/refundorder", (req, res) => {
                 let users = user.users.filter(
                     (user) => user.username === username
                 );
-                console.log(2);
-                console.log(users);
                 if (users.length === 0) {
                     res.json({ success: false, errors });
                 } else {
-                    console.log(3);
                     bcrypt
                         .compare(password, users[0].password)
                         .then(async (isMatch) => {
@@ -96,7 +92,6 @@ router.post("/refundorder", (req, res) => {
                                     payment_intent: paymentId,
                                     amount
                                 });
-                                console.log(refund);
                                 let paymentRefund = {
                                     refunded: true,
                                     refundedBy: username,
@@ -107,16 +102,13 @@ router.post("/refundorder", (req, res) => {
                                     $set: {paymentRefund}
                                 })
                                     .then(() => {
-                                        console.log(4);
                                         res.json({ success: true, paymentRefund });
                                     })
                                     .catch((err) => {
-                                        console.log(8);
                                         console.log(err);
                                         res.json({ success: false, errors });
                                     });
                             } else {
-                                console.log(5);
                                 res.json({ success: false, errors });
                             }
                         });

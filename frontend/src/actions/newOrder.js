@@ -160,3 +160,18 @@ export const newOrderClosePaymentModal = () => {
         type: 'NEW_ORDER_CLOSE_PAYMENT_MODAL'
     }
 }
+export const newOrderEditField = (payload) => {
+    return {
+        type: "NEW_ORDER_EDIT_FIELD",
+        payload,
+    };
+};
+export const newOrderValidate = (errors, valid) => {
+    return {
+        type: "NEW_ORDER_VALIDATE",
+        payload: {
+            errors,
+            valid,
+        },
+    };
+};
